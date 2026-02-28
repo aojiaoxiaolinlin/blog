@@ -1,0 +1,538 @@
+---
+
+---
+
+<section class="hero">
+    <!-- 左侧文字 -->
+    <div class="hero-l">
+        <div class="hero-eyebrow"><span></span>个人简历 · 关于我</div>
+        <div class="hero-name">void</div>
+        <div class="hero-alias">/ 傲娇小霖霖</div>
+
+        <div class="typewriter-wrap">
+            <span class="tw-prefix">$&gt;</span>
+            <span class="tw-text" id="twText"></span><span class="tw-cursor"
+            ></span>
+        </div>
+
+        <p class="hero-bio">
+            图形工程师 & 技术写作者。痴迷于把晦涩的 GPU
+            管线变成能在浏览器跑起来的实验。
+            相信好的工程美学和好的代码一样重要——两者都是关于<em
+                style="font-style:italic;color:var(--accent2)">可读性</em
+            >的。
+        </p>
+
+        <div class="hero-actions">
+            <a href="#contact" class="btn btn-fill">联系我</a>
+            <a href="#projects" class="btn btn-line">查看项目 →</a>
+            <a href="/" class="btn btn-line">阅读博客 →</a>
+        </div>
+    </div>
+
+    <!-- 右侧视觉 -->
+    <div class="hero-r">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        <canvas id="hero-cv"></canvas>
+        <div class="hero-grid-lines"></div>
+
+        <!-- 悬浮统计卡 -->
+        <div class="hero-card hc1">
+            <div class="hc-label">工作经验</div>
+            <div class="hc-val">
+                5<span style="font-size:.9rem;opacity:.6"> yr</span>
+            </div>
+            <div class="hc-sub">图形渲染 & 前端工程</div>
+            <div class="hc-bar">
+                <div class="hc-bar-fill" style="width:82%"></div>
+            </div>
+        </div>
+
+        <div class="hero-card hc2">
+            <div class="hc-label">开源贡献</div>
+            <div class="hc-val">
+                1.2<span style="font-size:.9rem;opacity:.6">k</span>
+            </div>
+            <div class="hc-sub">GitHub Stars · 12 repositories</div>
+            <div class="hc-bar">
+                <div
+                    class="hc-bar-fill"
+                    style="width:65%;background:linear-gradient(90deg,var(--accent3),var(--accent))"
+                >
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-card hc3">
+            <div class="hc-label">技术文章</div>
+            <div class="hc-val">
+                47<span style="font-size:.9rem;opacity:.6"> +</span>
+            </div>
+            <div class="hc-sub">WebGPU · Rust · 图形学</div>
+            <div class="hc-bar">
+                <div
+                    class="hc-bar-fill"
+                    style="width:55%;background:linear-gradient(90deg,var(--accent2),var(--red))"
+                >
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* ══════════════════════════════════════
+   HERO  — 分屏，左文字右动态
+══════════════════════════════════════ */
+    .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding-top: 60px;
+        position: relative;
+        /* overflow:hidden; REMOVED to prevent clipping on mobile */
+    }
+
+    /* 左 */
+    .hero-l {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 80px 56px 80px 48px;
+        position: relative;
+        z-index: 3;
+    }
+    .hero-eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        opacity: 0;
+        animation: fU 0.6s 0.1s forwards;
+    }
+    .hero-eyebrow span {
+        width: 28px;
+        height: 1px;
+        background: var(--accent);
+        flex-shrink: 0;
+    }
+    .hero-name {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(3rem, 5vw, 6rem);
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 1;
+        color: #fff;
+        margin-bottom: 8px;
+        opacity: 0;
+        animation: fU 0.75s 0.25s forwards;
+    }
+    .hero-alias {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+        letter-spacing: -0.02em;
+        line-height: 1;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 36px;
+        opacity: 0;
+        animation: fU 0.75s 0.35s forwards;
+    }
+    /* 打字机头衔 */
+    .typewriter-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 32px;
+        opacity: 0;
+        animation: fU 0.75s 0.48s forwards;
+    }
+    .tw-prefix {
+        font-size: 0.72rem;
+        color: var(--accent3);
+        letter-spacing: 0.06em;
+    }
+    .tw-text {
+        font-size: 0.82rem;
+        color: var(--text);
+        letter-spacing: 0.04em;
+        min-height: 1.2em;
+    }
+    .tw-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 14px;
+        background: var(--accent);
+        vertical-align: middle;
+        margin-left: 2px;
+        animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .hero-bio {
+        font-family: "Noto Serif SC", serif;
+        font-weight: 400;
+        font-size: 0.95rem;
+        color: var(--text2);
+        line-height: 1.9;
+        max-width: 440px;
+        margin-bottom: 48px;
+        opacity: 0;
+        animation: fU 0.75s 0.6s forwards;
+    }
+    .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fU 0.75s 0.72s forwards;
+    }
+
+    /* 右 */
+    .hero-r {
+        position: relative;
+        overflow: hidden;
+        background: var(--bg2);
+        border-left: none;
+    }
+    /* 左边缘渐变过渡 */
+    .hero-r::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 160px;
+        height: 100%;
+        background: linear-gradient(to right, var(--bg), transparent);
+        z-index: 5;
+        pointer-events: none;
+    }
+    #hero-cv {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    .hero-grid-lines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 2;
+        background-image:
+            linear-gradient(rgba(124, 106, 245, 0.05) 1px, transparent 1px),
+            linear-gradient(
+                90deg,
+                rgba(124, 106, 245, 0.05) 1px,
+                transparent 1px
+            );
+        background-size: 48px 48px;
+        mask-image: radial-gradient(
+            ellipse 80% 80% at 60% 50%,
+            black 30%,
+            transparent
+        );
+    }
+
+    /* 右侧悬浮信息卡 */
+    .hero-card {
+        position: absolute;
+        z-index: 6;
+        background: rgba(10, 10, 22, 0.86);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 16px 20px;
+        min-width: 190px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        animation: floatY 6s ease-in-out infinite;
+    }
+    .hc1 {
+        top: 25%;
+        right: 10%;
+        animation-delay: 0s;
+    }
+    .hc2 {
+        top: 55%;
+        left: 12%;
+        animation-delay: -2.5s;
+    }
+    .hc3 {
+        bottom: 12%;
+        right: 10%;
+        animation-delay: -4.5s;
+    }
+    @keyframes floatY {
+        0%,
+        100% {
+            transform: translateY(0) rotate(-0.5deg);
+        }
+        50% {
+            transform: translateY(-12px) rotate(0.5deg);
+        }
+    }
+    .hc-label {
+        font-size: 0.58rem;
+        color: var(--muted);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+    }
+    .hc-val {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.03em;
+        line-height: 1;
+    }
+    .hc-sub {
+        font-size: 0.65rem;
+        color: var(--text2);
+        margin-top: 4px;
+    }
+    .hc-bar {
+        height: 3px;
+        background: var(--border);
+        border-radius: 2px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .hc-bar-fill {
+        height: 100%;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    /* orbs */
+    .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        pointer-events: none;
+        z-index: 1;
+    }
+    .orb1 {
+        width: 300px;
+        height: 300px;
+        background: rgba(124, 106, 245, 0.15);
+        top: 5%;
+        right: 0%;
+    }
+    .orb2 {
+        width: 240px;
+        height: 240px;
+        background: rgba(245, 162, 106, 0.1);
+        bottom: 10%;
+        left: 5%;
+    }
+    .orb3 {
+        width: 160px;
+        height: 160px;
+        background: rgba(106, 245, 200, 0.08);
+        top: 50%;
+        right: 15%;
+    }
+
+    @media (max-width: 900px) {
+        .hero {
+            grid-template-columns: 1fr;
+            min-height: auto;
+        }
+        .hero-r {
+            min-height: 50vh;
+        }
+    }
+</style>
+
+<script>
+    /* ══ Typewriter ══ */
+    const titles = [
+        "WebGPU 渲染工程师",
+        "技术写作者 & 博主",
+        "Rust / WASM 探索者",
+        "开源项目维护者",
+        "图形学爱好者",
+    ];
+    let ti = 0,
+        ci = 0,
+        deleting = false;
+    const twEl = document.getElementById("twText");
+    if (twEl) {
+        function typeStep() {
+            const cur = titles[ti];
+            if (!deleting) {
+                twEl!.textContent = cur.slice(0, ++ci);
+                if (ci === cur.length) {
+                    deleting = true;
+                    setTimeout(typeStep, 2200);
+                    return;
+                }
+            } else {
+                twEl!.textContent = cur.slice(0, --ci);
+                if (ci === 0) {
+                    deleting = false;
+                    ti = (ti + 1) % titles.length;
+                    setTimeout(typeStep, 400);
+                    return;
+                }
+            }
+            setTimeout(typeStep, deleting ? 50 : 80);
+        }
+        setTimeout(typeStep, 1200);
+    }
+
+    /* ══ Hero Canvas — wave + particles ══ */
+    const cv = document.getElementById("hero-cv") as HTMLCanvasElement | null;
+    if (cv) {
+        const ctx = cv.getContext("2d");
+        if (ctx) {
+            function resize() {
+                if (cv) {
+                    cv.width = cv.offsetWidth || 600;
+                    cv.height = cv.offsetHeight || 700;
+                }
+            }
+            resize();
+            if (cv.parentElement) {
+                new ResizeObserver(resize).observe(cv.parentElement);
+            }
+
+            const N = 80;
+            const pts = Array.from({ length: N }, () => ({
+                x: Math.random(),
+                y: Math.random(),
+                vx: (Math.random() - 0.5) * 0.0005,
+                vy: (Math.random() - 0.5) * 0.0005,
+                r: Math.random() * 1.4 + 0.3,
+                ph: Math.random() * Math.PI * 2,
+            }));
+            const waves = [
+                {
+                    amp: 0.05,
+                    freq: 2,
+                    speed: 0.35,
+                    ph: 0,
+                    c: "rgba(124,106,245,",
+                    lw: 1.4,
+                },
+                {
+                    amp: 0.032,
+                    freq: 3.2,
+                    speed: 0.52,
+                    ph: 1.1,
+                    c: "rgba(106,245,200,",
+                    lw: 0.9,
+                },
+                {
+                    amp: 0.022,
+                    freq: 5,
+                    speed: 0.78,
+                    ph: 2.4,
+                    c: "rgba(245,162,106,",
+                    lw: 0.7,
+                },
+            ];
+            let t = 0;
+            function draw() {
+                if (!cv || !ctx) return;
+                const W = cv.width,
+                    H = cv.height;
+                if (!W || !H) {
+                    t += 0.016;
+                    requestAnimationFrame(draw);
+                    return;
+                }
+                ctx.clearRect(0, 0, W, H);
+                ctx.fillStyle = "#07070e";
+                ctx.fillRect(0, 0, W, H);
+                // waves
+                waves.forEach((w) => {
+                    const cy = H * 0.42;
+                    [0.04, 0.55].forEach((alpha) => {
+                        ctx.beginPath();
+                        for (let x = 0; x <= W; x++) {
+                            const nx = x / W;
+                            const y =
+                                cy +
+                                Math.sin(
+                                    nx * Math.PI * 2 * w.freq +
+                                        t * w.speed +
+                                        w.ph,
+                                ) *
+                                    H *
+                                    w.amp +
+                                Math.sin(
+                                    nx * Math.PI * 2 * w.freq * 1.8 +
+                                        t * w.speed * 0.5 +
+                                        w.ph,
+                                ) *
+                                    H *
+                                    w.amp *
+                                    0.35;
+                            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                        }
+                        ctx.strokeStyle = w.c + alpha + ")";
+                        ctx.lineWidth = alpha > 0.1 ? w.lw : w.lw * 9;
+                        ctx.stroke();
+                    });
+                });
+                // particles
+                pts.forEach((p) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = 1;
+                    if (p.x > 1) p.x = 0;
+                    if (p.y < 0) p.y = 1;
+                    if (p.y > 1) p.y = 0;
+                    const a = 0.25 + Math.sin(t * 1.1 + p.ph) * 0.2;
+                    ctx.beginPath();
+                    ctx.arc(p.x * W, p.y * H, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(150,138,255,${a})`;
+                    ctx.fill();
+                });
+                // connections
+                for (let i = 0; i < N; i++)
+                    for (let j = i + 1; j < N; j++) {
+                        const dx = (pts[i].x - pts[j].x) * W,
+                            dy = (pts[i].y - pts[j].y) * H;
+                        const d = Math.sqrt(dx * dx + dy * dy);
+                        if (d < 70) {
+                            ctx.strokeStyle = `rgba(124,106,245,${(1 - d / 70) * 0.15})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(pts[i].x * W, pts[i].y * H);
+                            ctx.lineTo(pts[j].x * W, pts[j].y * H);
+                            ctx.stroke();
+                        }
+                    }
+                // scan line
+                const sy = ((t * 0.1) % 1) * H;
+                const sg = ctx.createLinearGradient(0, sy - 1, 0, sy + 2);
+                sg.addColorStop(0, "transparent");
+                sg.addColorStop(0.5, "rgba(124,106,245,.2)");
+                sg.addColorStop(1, "transparent");
+                ctx.fillStyle = sg;
+                ctx.fillRect(0, sy - 2, W, 4);
+                t += 0.016;
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+    }
+</script>

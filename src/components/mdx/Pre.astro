@@ -1,0 +1,50 @@
+---
+const props = Astro.props;
+---
+<div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <div class="code-dot" style="background:#f56a6a"></div>
+      <div class="code-dot" style="background:#f5a26a"></div>
+      <div class="code-dot" style="background:#6af5c8"></div>
+    </div>
+    <span class="code-lang">{props['data-language'] || 'Code'}</span>
+    <button class="code-copy">复制</button>
+  </div>
+  <div class="code-body">
+    <pre {...props} style=""><slot /></pre>
+  </div>
+</div>
+
+<script>
+  // 确保在 Astro 的 View Transitions 等机制下也能正常绑定
+  const initCopyButtons = () => {
+    document.querySelectorAll('.code-copy').forEach(btn => {
+      // 避免重复事件绑定
+      if (btn.getAttribute('data-bound')) return;
+      btn.setAttribute('data-bound', 'true');
+      
+      btn.addEventListener('click', async (e) => {
+        const target = e.target as HTMLElement;
+        const pre = target.closest('.code-block')?.querySelector('.code-body pre');
+        if (pre) {
+          const codeText = pre.textContent || '';
+          try {
+            await navigator.clipboard.writeText(codeText);
+            const originalText = target.textContent;
+            target.textContent = '✓ 已复制';
+            setTimeout(() => target.textContent = originalText, 2000);
+          } catch (err) {
+            target.textContent = '复制失败';
+            setTimeout(() => target.textContent = '复制', 2000);
+          }
+        }
+      });
+    });
+  };
+  
+  initCopyButtons();
+  document.addEventListener('astro:page-load', initCopyButtons);
+</script>
+
+

@@ -1,0 +1,31 @@
+---
+// components/Callout.astro
+// Usage in MDX:
+//   import Callout from '../../components/Callout.astro'
+//   <Callout type="warning" title="注意">内容</Callout>
+
+interface Props {
+  type?: "info" | "warning" | "tip" | "danger";
+  title?: string;
+  icon?: string;
+}
+
+const { type = "info", title, icon } = Astro.props;
+
+const defaults: Record<string, { icon: string; title: string }> = {
+  info: { icon: "💡", title: "说明" },
+  warning: { icon: "⚠️", title: "注意" },
+  tip: { icon: "✨", title: "技巧" },
+  danger: { icon: "🚨", title: "危险" },
+};
+const resolvedIcon = icon ?? defaults[type].icon;
+const resolvedTitle = title ?? defaults[type].title;
+---
+
+<div class={`callout ${type}`}>
+  <span class="callout-icon">{resolvedIcon}</span>
+  <div class="callout-body">
+    <div class="callout-title">{resolvedTitle}</div>
+    <slot />
+  </div>
+</div>

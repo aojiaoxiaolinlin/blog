@@ -1,0 +1,342 @@
+---
+
+---
+
+<section id="lab" class="lab-bg">
+  <div class="wrap">
+    <div class="section-hd rv">
+      <div>
+        <div class="section-label">交互实验室</div><h2 class="section-title">
+          实时运行的实验
+        </h2>
+      </div>
+      <a href="#" class="section-link">全部实验</a>
+    </div>
+    <div class="lab-grid rv">
+      <div class="lc">
+        <div class="lc-vis">
+          <canvas id="lc1" width="400" height="200"></canvas><div
+            class="lc-overlay"
+          >
+          </div><span class="lc-badge live">LIVE</span>
+        </div>
+        <div class="lc-body">
+          <h3 class="lc-title">粒子流体模拟</h3><p class="lc-desc">
+            基于 WebGPU Compute Shader 的 SPH 流体，实时 50,000 粒子交互。
+          </p><div class="lc-tech">
+            <span>WebGPU</span><span>WGSL</span><span>Compute</span>
+          </div>
+        </div>
+      </div>
+      <div class="lc">
+        <div class="lc-vis">
+          <canvas id="lc2" width="400" height="200"></canvas><div
+            class="lc-overlay"
+          >
+          </div><span class="lc-badge live">LIVE</span>
+        </div>
+        <div class="lc-body">
+          <h3 class="lc-title">分形噪声生成器</h3><p class="lc-desc">
+            实时可调参数的多八度 Perlin / Simplex 噪声，可导出 PNG。
+          </p><div class="lc-tech">
+            <span>Canvas 2D</span><span>WASM</span><span>Rust</span>
+          </div>
+        </div>
+      </div>
+      <div class="lc">
+        <div class="lc-vis">
+          <canvas id="lc3" width="400" height="200"></canvas><div
+            class="lc-overlay"
+          >
+          </div><span class="lc-badge wip">WIP</span>
+        </div>
+        <div class="lc-body">
+          <h3 class="lc-title">WGSL 着色器游乐场</h3><p class="lc-desc">
+            实时编辑 WGSL 着色器代码并即时看到渲染结果，带错误高亮。
+          </p><div class="lc-tech">
+            <span>WebGPU</span><span>WGSL</span><span>CodeMirror</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* LAB */
+  .lab-bg {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .lab-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .lc {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg);
+    transition:
+      transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+      box-shadow 0.35s;
+    cursor: none;
+  }
+  .lc:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 32px 80px rgba(0, 0, 0, 0.7),
+      0 0 0 1px var(--accent);
+  }
+  .lc-vis {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  .lc-vis canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .lc-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, var(--bg));
+  }
+  .lc-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 3px 9px;
+    border-radius: 2px;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .live {
+    background: rgba(106, 245, 200, 0.12);
+    color: var(--accent3);
+    border: 1px solid rgba(106, 245, 200, 0.3);
+  }
+  .wip {
+    background: rgba(245, 162, 106, 0.12);
+    color: var(--accent2);
+    border: 1px solid rgba(245, 162, 106, 0.3);
+  }
+  .lc-body {
+    padding: 20px 22px 24px;
+  }
+  .lc-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .lc-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .lc-tech {
+    margin-top: 14px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  .lc-tech span {
+    padding: 2px 7px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-size: 0.58rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+</style>
+
+<script>
+  // ─── Lab Canvas 1: particles ───
+  (function () {
+    const cv = document.getElementById("lc1") as HTMLCanvasElement;
+    if (!cv) return;
+    const ctx = cv.getContext("2d");
+    if (!ctx) return;
+    const N = 150,
+      pts = [];
+    for (let i = 0; i < N; i++)
+      pts.push({
+        x: Math.random() * cv.width,
+        y: Math.random() * cv.height,
+        vx: (Math.random() - 0.5) * 0.7,
+        vy: (Math.random() - 0.5) * 0.7,
+        r: Math.random() * 1.8 + 0.4,
+        h: Math.floor(Math.random() * 60 + 230),
+      });
+    (function draw() {
+      ctx.fillStyle = "rgba(5,5,13,.18)";
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      pts.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > cv.width) p.vx *= -1;
+        if (p.y < 0 || p.y > cv.height) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsl(${p.h},75%,70%)`;
+        ctx.fill();
+      });
+      for (let i = 0; i < N; i++)
+        for (let j = i + 1; j < N; j++) {
+          const dx = pts[i].x - pts[j].x,
+            dy = pts[i].y - pts[j].y,
+            d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 55) {
+            ctx.strokeStyle = `rgba(124,106,245,${(1 - d / 55) * 0.4})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.stroke();
+          }
+        }
+      requestAnimationFrame(draw);
+    })();
+  })();
+
+  // ─── Lab Canvas 2: noise ───
+  (function () {
+    const cv = document.getElementById("lc2") as HTMLCanvasElement;
+    if (!cv) return;
+    const ctx = cv.getContext("2d");
+    let t = 0;
+    const perm = new Array(256)
+      .fill(0)
+      .map((_, i) => i)
+      .sort(() => Math.random() - 0.5);
+    function fade(t: number) {
+      return t * t * t * (t * (t * 6 - 15) + 10);
+    }
+    function lerp(t: number, a: number, b: number) {
+      return a + t * (b - a);
+    }
+    function grad(h: number, x: number, y: number) {
+      h &= 3;
+      const u = h < 2 ? x : y,
+        v = h < 2 ? y : x;
+      return (h & 1 ? -u : u) + (h & 2 ? -v : v);
+    }
+    function noise(x: number, y: number) {
+      const X = Math.floor(x) & 255,
+        Y = Math.floor(y) & 255;
+      x -= Math.floor(x);
+      y -= Math.floor(y);
+      const u = fade(x),
+        v = fade(y);
+      return lerp(
+        v,
+        lerp(
+          u,
+          grad(perm[X + perm[Y]], x, y),
+          grad(perm[X + 1 + perm[Y]], x - 1, y),
+        ),
+        lerp(
+          u,
+          grad(perm[X + perm[Y + 1]], x, y - 1),
+          grad(perm[X + 1 + perm[Y + 1]], x - 1, y - 1),
+        ),
+      );
+    }
+    (function draw() {
+      if (!ctx) return;
+      const id = ctx.createImageData(cv.width, cv.height),
+        d = id.data;
+      for (let y = 0; y < cv.height; y++)
+        for (let x = 0; x < cv.width; x++) {
+          const n = noise(x / 45 + t, y / 45) * 0.5 + 0.5;
+          const r = Math.floor(n * 90 + 50),
+            g = Math.floor(n * 55 + 20),
+            b = Math.floor(n * 175 + 70);
+          const i = (y * cv.width + x) * 4;
+          d[i] = r;
+          d[i + 1] = g;
+          d[i + 2] = b;
+          d[i + 3] = 255;
+        }
+      ctx.putImageData(id, 0, 0);
+      t += 0.007;
+      requestAnimationFrame(draw);
+    })();
+  })();
+
+  // ─── Lab Canvas 3: torus ───
+  (function () {
+    const cv = document.getElementById("lc3") as HTMLCanvasElement;
+    if (!cv) return;
+    const ctx = cv.getContext("2d");
+    const R = 52,
+      r = 21,
+      nu = 36,
+      nv = 18,
+      pts3d = [];
+    for (let i = 0; i < nu; i++)
+      for (let j = 0; j < nv; j++) {
+        const u = (i / nu) * Math.PI * 2,
+          v = (j / nv) * Math.PI * 2;
+        pts3d.push({
+          x: (R + r * Math.cos(v)) * Math.cos(u),
+          y: (R + r * Math.cos(v)) * Math.sin(u),
+          z: r * Math.sin(v),
+        });
+      }
+    let rx = 0,
+      ry = 0;
+    function rotX(p: { x: number; y: number; z: number }, a: number) {
+      const y = p.y * Math.cos(a) - p.z * Math.sin(a),
+        z = p.y * Math.sin(a) + p.z * Math.cos(a);
+      return { ...p, y, z };
+    }
+    function rotY(p: { x: number; y: number; z: number }, a: number) {
+      const x = p.x * Math.cos(a) + p.z * Math.sin(a),
+        z = -p.x * Math.sin(a) + p.z * Math.cos(a);
+      return { ...p, x, z };
+    }
+    function proj(p: { z: number; x: number; y: number }) {
+      const f = 210,
+        z = p.z + 215;
+      return {
+        sx: (p.x / z) * f + cv.width / 2,
+        sy: (p.y / z) * f + cv.height / 2,
+        d: z,
+      };
+    }
+    (function draw() {
+      if (!ctx) return;
+      ctx.fillStyle = "#050510";
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      const tf = pts3d.map((p) => proj(rotY(rotX(p, rx), ry)));
+      for (let i = 0; i < nu; i++)
+        for (let j = 0; j < nv; j++) {
+          const a = tf[i * nv + j],
+            b = tf[i * nv + ((j + 1) % nv)],
+            c = tf[((i + 1) % nu) * nv + j];
+          const al = Math.min(1, (a.d - 155) / 140);
+          ctx.strokeStyle = `rgba(124,106,245,${al * 0.65})`;
+          ctx.lineWidth = 0.7;
+          ctx.beginPath();
+          ctx.moveTo(a.sx, a.sy);
+          ctx.lineTo(b.sx, b.sy);
+          ctx.stroke();
+          ctx.strokeStyle = `rgba(106,245,200,${al * 0.3})`;
+          ctx.beginPath();
+          ctx.moveTo(a.sx, a.sy);
+          ctx.lineTo(c.sx, c.sy);
+          ctx.stroke();
+        }
+      rx += 0.007;
+      ry += 0.012;
+      requestAnimationFrame(draw);
+    })();
+  })();
+</script>

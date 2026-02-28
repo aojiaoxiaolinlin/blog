@@ -1,23 +1,76 @@
+---
+import "../styles/global.css";
+import "../styles/prose.css";
+
+interface Props {
+	title?: string;
+}
+
+const { title = "LIN.DEV — 技术与思考的碎片" } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="zh">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+		/>
 	</head>
 	<body>
+		<div class="cur-r" id="cr"></div>
+		<div class="cur-d" id="cd"></div>
+
 		<slot />
+
+		<script>
+			// ─── Cursor ───
+			const cd = document.getElementById("cd");
+			const cr = document.getElementById("cr");
+			if (cd && cr) {
+				let mx = 0,
+					my = 0,
+					rx = 0,
+					ry = 0;
+				document.addEventListener("mousemove", (e) => {
+					mx = e.clientX;
+					my = e.clientY;
+					cd.style.left = mx + "px";
+					cd.style.top = my + "px";
+				});
+				(function loop() {
+					rx += (mx - rx) * 0.1;
+					ry += (my - ry) * 0.1;
+					cr.style.left = rx + "px";
+					cr.style.top = ry + "px";
+					requestAnimationFrame(loop);
+				})();
+			}
+
+			// ─── Scroll reveal ───
+			const obs = new IntersectionObserver(
+				(es) => {
+					es.forEach((e) => {
+						if (e.isIntersecting) {
+							e.target.classList.add("in");
+						}
+					});
+				},
+				{ threshold: 0.08 },
+			);
+			document.querySelectorAll(".rv").forEach((el) => obs.observe(el));
+		</script>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

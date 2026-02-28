@@ -1,0 +1,458 @@
+---
+
+---
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-hd rv">
+      <div>
+        <div
+          class="section-label"
+          style="font-size:.63rem;color:var(--accent);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px"
+        >
+          技术能力
+        </div>
+        <h2 class="section-title">Skills & Expertise</h2>
+      </div>
+    </div>
+
+    <div class="skills-layout">
+      <!-- 雷达图 -->
+      <div class="radar-wrap rv">
+        <div class="radar-title">能力雷达 · 主观自评 / 10</div>
+        <svg id="radar-svg" width="300" height="300" viewBox="0 0 300 300">
+          <defs>
+            <linearGradient id="rg1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7c6af5" stop-opacity=".8"></stop>
+              <stop offset="100%" stop-color="#f5a26a" stop-opacity=".6"></stop>
+            </linearGradient>
+          </defs>
+          <!-- 网格六边形 背景 -->
+          <g id="radar-grid"></g>
+          <!-- 轴线 -->
+          <g id="radar-axes"></g>
+          <!-- 数据多边形 -->
+          <polygon
+            id="radar-poly"
+            fill="url(#rg1)"
+            fill-opacity=".18"
+            stroke="url(#rg1)"
+            stroke-width="1.5"></polygon>
+          <!-- 数据点 -->
+          <g id="radar-dots"></g>
+          <!-- 轴标签 -->
+          <g id="radar-labels"></g>
+        </svg>
+        <div class="radar-legend">
+          <div class="rl-item">
+            <div class="rl-dot" style="background:var(--accent)"></div>图形/GPU
+          </div>
+          <div class="rl-item">
+            <div class="rl-dot" style="background:var(--accent2)"></div>前端工程
+          </div>
+          <div class="rl-item">
+            <div class="rl-dot" style="background:var(--accent3)"></div>系统编程
+          </div>
+          <div class="rl-item">
+            <div class="rl-dot" style="background:var(--red)"></div>技术写作
+          </div>
+          <div class="rl-item">
+            <div class="rl-dot" style="background:#b57af5"></div>工程设计
+          </div>
+          <div class="rl-item">
+            <div class="rl-dot" style="background:#7af5c4"></div>算法基础
+          </div>
+        </div>
+      </div>
+
+      <!-- 分类技能 -->
+      <div class="skill-cats rv d1">
+        <div>
+          <div class="skill-cat-title">图形 & GPU</div>
+          <div class="skill-tags">
+            <span class="sk gpu" data-pct="95">WebGPU</span>
+            <span class="sk gpu" data-pct="88">WGSL</span>
+            <span class="sk gpu" data-pct="82">WebGL</span>
+            <span class="sk gpu" data-pct="76">GLSL</span>
+            <span class="sk gpu" data-pct="70">光线追踪</span>
+            <span class="sk gpu" data-pct="68">PBR 材质</span>
+            <span class="sk gpu" data-pct="60">Vulkan</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-cat-title">前端工程</div>
+          <div class="skill-tags">
+            <span class="sk web" data-pct="92">TypeScript</span>
+            <span class="sk web" data-pct="90">React</span>
+            <span class="sk web" data-pct="85">CSS/动画</span>
+            <span class="sk web" data-pct="80">Three.js</span>
+            <span class="sk web" data-pct="74">Svelte</span>
+            <span class="sk web" data-pct="72">Next.js</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-cat-title">系统 & 工具链</div>
+          <div class="skill-tags">
+            <span class="sk sys" data-pct="86">Rust</span>
+            <span class="sk sys" data-pct="82">WebAssembly</span>
+            <span class="sk sys" data-pct="72">C++</span>
+            <span class="sk sys" data-pct="68">Linux</span>
+            <span class="sk sys" data-pct="65">Docker</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-cat-title">设计 & 写作</div>
+          <div class="skill-tags">
+            <span class="sk tool" data-pct="80">技术写作</span>
+            <span class="sk tool" data-pct="75">Figma</span>
+            <span class="sk tool" data-pct="70">UI/UX</span>
+            <span class="sk tool" data-pct="65">Motion Design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ══════════════════════════════════════
+   SKILLS  — 雷达图 + 分类卡片
+══════════════════════════════════════ */
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* 左：雷达图 */
+  .radar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 32px 32px;
+  }
+  .radar-title {
+    font-size: 0.63rem;
+    color: var(--muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  #radar-svg {
+    display: block;
+    overflow: visible;
+  }
+  :global(.radar-axis-label) {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.62rem;
+    fill: var(--muted);
+    dominant-baseline: middle;
+  }
+  .radar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+    justify-content: center;
+  }
+  .rl-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.63rem;
+    color: var(--text2);
+  }
+  .rl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* 右：分类技能卡 */
+  .skill-cats {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .skill-cat-title {
+    font-size: 0.63rem;
+    color: var(--muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .skill-tags {
+    display: flex;
+    font-family: "JetBrains Mono", monospace;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sk {
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    cursor: none;
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background 0.2s,
+      transform 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .sk::before {
+    content: attr(data-pct *);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: currentColor;
+    opacity: 0.4;
+    transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .sk:hover {
+    transform: translateY(-2px);
+  }
+  .sk.gpu {
+    color: var(--red);
+    border-color: rgba(245, 106, 106, 0.3);
+    background: rgba(245, 106, 106, 0.05);
+  }
+  .sk.gpu:hover {
+    background: rgba(245, 106, 106, 0.1);
+  }
+  .sk.web {
+    color: var(--accent);
+    border-color: rgba(124, 106, 245, 0.3);
+    background: rgba(124, 106, 245, 0.05);
+  }
+  .sk.web:hover {
+    background: rgba(124, 106, 245, 0.12);
+  }
+  .sk.sys {
+    color: var(--accent3);
+    border-color: rgba(106, 245, 200, 0.3);
+    background: rgba(106, 245, 200, 0.05);
+  }
+  .sk.sys:hover {
+    background: rgba(106, 245, 200, 0.1);
+  }
+  .sk.tool {
+    color: var(--accent2);
+    border-color: rgba(245, 162, 106, 0.3);
+    background: rgba(245, 162, 106, 0.05);
+  }
+  .sk.tool:hover {
+    background: rgba(245, 162, 106, 0.1);
+  }
+
+  @media (max-width: 900px) {
+    .skills-layout {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>
+
+<script>
+  /* ══ Radar Chart ══ */
+  const svg = document.getElementById("radar-svg");
+  if (svg) {
+    const axes = [
+      { label: "图形/GPU", val: 9.5, color: "#7c6af5" },
+      { label: "前端工程", val: 9.0, color: "#f5a26a" },
+      { label: "系统编程", val: 8.2, color: "#6af5c8" },
+      { label: "技术写作", val: 8.8, color: "#f56a8a" },
+      { label: "工程设计", val: 7.8, color: "#b57af5" },
+      { label: "算法基础", val: 7.5, color: "#7af5c4" },
+    ];
+    const N = axes.length,
+      cx = 150,
+      cy = 150,
+      maxR = 100,
+      levels = 5;
+    const grid = document.getElementById("radar-grid");
+    const axesG = document.getElementById("radar-axes");
+    const poly = document.getElementById("radar-poly");
+    const dotsG = document.getElementById("radar-dots");
+    const labelsG = document.getElementById("radar-labels");
+
+    function pt(r: number, i: number) {
+      const a = (i / N) * Math.PI * 2 - Math.PI / 2;
+      return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+    }
+    // Grid hexagons
+    if (grid) {
+      for (let l = 1; l <= levels; l++) {
+        const r = (maxR * l) / levels;
+        let d = "";
+        for (let i = 0; i < N; i++) {
+          const p = pt(r, i);
+          d += (i ? "L" : "M") + p.x + " " + p.y;
+        }
+        d += "Z";
+        const path = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "path",
+        );
+        path.setAttribute("d", d);
+        path.setAttribute("fill", "none");
+        path.setAttribute(
+          "stroke",
+          l === levels ? "rgba(255,255,255,.1)" : "rgba(255,255,255,.05)",
+        );
+        path.setAttribute("stroke-width", l === levels ? "1" : "0.5");
+        grid.appendChild(path);
+      }
+    }
+    // Axes
+    if (axesG) {
+      axes.forEach((_, i) => {
+        const p = pt(maxR + 4, i);
+        const line = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "line",
+        );
+        line.setAttribute("x1", cx.toString());
+        line.setAttribute("y1", cy.toString());
+        line.setAttribute("x2", p.x.toString());
+        line.setAttribute("y2", p.y.toString());
+        line.setAttribute("stroke", "rgba(255,255,255,.08)");
+        line.setAttribute("stroke-width", "1");
+        axesG.appendChild(line);
+      });
+    }
+    // Data polygon (animated)
+    let progress = 0;
+    function animRadar() {
+      progress = Math.min(1, progress + 0.025);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const polyPts = axes.map((a, i) => {
+        const r = maxR * (a.val / 10) * ease;
+        return pt(r, i);
+      });
+      if (poly) {
+        poly.setAttribute(
+          "points",
+          polyPts.map((p) => p.x + "," + p.y).join(" "),
+        );
+      }
+      // Dots
+      if (dotsG) {
+        dotsG.innerHTML = "";
+        polyPts.forEach((p, i) => {
+          const circle = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle",
+          );
+          circle.setAttribute("cx", p.x.toString());
+          circle.setAttribute("cy", p.y.toString());
+          circle.setAttribute("r", "4");
+          circle.setAttribute("fill", axes[i].color);
+          circle.setAttribute("stroke", axes[i].color);
+          circle.setAttribute("stroke-width", "1.5");
+          circle.setAttribute(
+            "filter",
+            "drop-shadow(0 0 4px " + axes[i].color + ")",
+          );
+          dotsG.appendChild(circle);
+          // value label near dot
+          if (progress >= 1) {
+            const vl = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "text",
+            );
+            const lp = pt(maxR * (axes[i].val / 10) + 14, i);
+            vl.setAttribute("x", lp.x.toString());
+            vl.setAttribute("y", lp.y.toString());
+            vl.setAttribute("font-family", "JetBrains Mono,monospace");
+            vl.setAttribute("font-size", "8");
+            vl.setAttribute("fill", axes[i].color);
+            vl.setAttribute("text-anchor", "middle");
+            vl.setAttribute("dominant-baseline", "middle");
+            vl.textContent = axes[i].val.toString();
+            dotsG.appendChild(vl);
+          }
+        });
+      }
+      if (progress < 1) requestAnimationFrame(animRadar);
+    }
+    // Labels
+    if (labelsG) {
+      axes.forEach((a, i) => {
+        const lp = pt(maxR + 22, i);
+        const txt = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "text",
+        );
+        txt.setAttribute("x", lp.x.toString());
+        txt.setAttribute("y", lp.y.toString());
+        txt.setAttribute("class", "radar-axis-label");
+        txt.setAttribute("text-anchor", "middle");
+        txt.setAttribute("dominant-baseline", "middle");
+        txt.setAttribute("font-size", "9.5");
+        txt.textContent = a.label;
+        labelsG.appendChild(txt);
+      });
+    }
+
+    // Trigger when visible
+    const obs = new IntersectionObserver(
+      (es) => {
+        if (es[0].isIntersecting) {
+          animRadar();
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    obs.observe(svg);
+  }
+
+  /* ══ Skill tag bottom bar (animated width) ══ */
+  const skObs = new IntersectionObserver(
+    (es) => {
+      es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll(".sk").forEach((skElement, i) => {
+          const sk = skElement as HTMLElement;
+          setTimeout(() => {
+            const pct = sk.dataset.pct || "70";
+            sk.style.setProperty("--w", pct + "%");
+            sk.style.boxShadow = `inset 0 -2px 0 0 currentColor`;
+            sk.style.transition = `box-shadow .6s ${i * 0.04}s`;
+
+            // Use a small pseudo element workaround with native js
+            // Add a child div for the bar instead to be cleaner than relying on css string injection
+            const bar = document.createElement("div");
+            bar.style.position = "absolute";
+            bar.style.bottom = "0";
+            bar.style.left = "0";
+            bar.style.height = "2px";
+            bar.style.backgroundColor = "currentColor";
+            bar.style.opacity = "0.4";
+            bar.style.width = "0%";
+            bar.style.transition = "width 0.6s cubic-bezier(0.23, 1, 0.32, 1)";
+            sk.appendChild(bar);
+
+            requestAnimationFrame(() => {
+              bar.style.width = pct + "%";
+            });
+          }, i * 40);
+        });
+        skObs.unobserve(e.target);
+      });
+    },
+    { threshold: 0.3 },
+  );
+
+  document.querySelectorAll(".skill-cats").forEach((el) => skObs.observe(el));
+</script>

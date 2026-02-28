@@ -1,0 +1,297 @@
+---
+import { getCollection } from "astro:content";
+
+const allNotes = await getCollection("notes");
+const sortedNotes = allNotes.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const notes = sortedNotes.slice(0, 5);
+
+const formatNoteDate = (date: Date) => {
+  const yy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+  return { y: String(yy), md: `${mm}.${dd}` };
+};
+
+const getTagColorClass = (tag: string) => {
+  const t = tag.toLowerCase();
+  if (t.includes("gpu") || t.includes("glsl")) return "gpu";
+  if (t.includes("wasm") || t.includes("rust")) return "wasm";
+  if (t.includes("css") || t.includes("web")) return "web";
+  return "note";
+};
+---
+
+<section id="notes">
+  <div class="wrap">
+    <div class="two-col">
+      <div>
+        <div class="section-hd rv">
+          <div>
+            <div class="section-label">思维碎片</div><h2 class="section-title">
+              笔记与随记
+            </h2>
+          </div>
+          <a href="/notes" class="section-link">全部笔记</a>
+        </div>
+        <div class="note-list">
+          {
+            notes.map((note, index) => {
+              const dt = formatNoteDate(note.data.date);
+              return (
+                <a
+                  href={`/notes/${note.id}`}
+                  class={`ni rv ${index > 0 ? `d${Math.min(index, 3)}` : ""}`}
+                >
+                  <div class="ni-date">
+                    {dt.y}
+                    <br />
+                    {dt.md}
+                  </div>
+                  <div class="ni-title">{note.data.title}</div>
+                  <div class="ni-tags">
+                    {note.data.tags &&
+                      note.data.tags.map((tag) => (
+                        <span class={`tag ${getTagColorClass(tag)}`}>
+                          {tag}
+                        </span>
+                      ))}
+                  </div>
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+      <aside class="sidebar rv">
+        <div class="section-label" style="margin-bottom:20px">本站数据</div>
+        <div class="stat-row">
+          <span class="stat-label">文章总数</span><span
+            class="stat-val"
+            data-c="47">0</span
+          >
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">总阅读量</span><span
+            class="stat-val"
+            data-c="128450">0</span
+          >
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">交互实验</span><span
+            class="stat-val"
+            data-c="12">0</span
+          >
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">写作天数</span><span
+            class="stat-val"
+            data-c="730">0</span
+          >
+        </div>
+        <div class="tech-panel">
+          <div class="tech-panel-title">技术主题分布</div>
+          <div class="tb">
+            <div class="tb-lbl">
+              <span>WebGPU / 图形</span><span>42%</span>
+            </div><div class="tb-track">
+              <div class="tb-fill f1" style="width:0" data-w="42%"></div>
+            </div>
+          </div>
+          <div class="tb">
+            <div class="tb-lbl">
+              <span>Rust / WASM</span><span>28%</span>
+            </div><div class="tb-track">
+              <div class="tb-fill f2" style="width:0" data-w="28%"></div>
+            </div>
+          </div>
+          <div class="tb">
+            <div class="tb-lbl"><span>Web 前端</span><span>18%</span></div><div
+              class="tb-track"
+            >
+              <div class="tb-fill f3" style="width:0" data-w="18%"></div>
+            </div>
+          </div>
+          <div class="tb">
+            <div class="tb-lbl"><span>随笔思考</span><span>12%</span></div><div
+              class="tb-track"
+            >
+              <div class="tb-fill f4" style="width:0" data-w="12%"></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* NOTES */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 80px;
+  }
+  .note-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .ni {
+    padding: 26px 0 26px 16px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 28px;
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .ni::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .ni:hover::before {
+    transform: scaleY(1);
+  }
+  .ni-date {
+    font-size: 0.66rem;
+    color: var(--muted);
+    line-height: 1.6;
+    padding-top: 2px;
+  }
+  .ni-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.45;
+    transition: color 0.2s;
+  }
+  .ni:hover .ni-title {
+    color: var(--accent);
+  }
+  .ni-tags {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+    padding-top: 2px;
+  }
+  .sidebar {
+    position: sticky;
+    top: 120px;
+    align-self: start;
+  }
+  .stat-row {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .stat-label {
+    font-size: 0.66rem;
+    color: var(--muted);
+    letter-spacing: 0.07em;
+  }
+  .stat-val {
+    font-family: "Playfair Display", serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.04em;
+  }
+  .tech-panel {
+    margin-top: 28px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg2);
+  }
+  .tech-panel-title {
+    font-size: 0.61rem;
+    color: var(--muted);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .tb {
+    margin-bottom: 14px;
+  }
+  .tb-lbl {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.66rem;
+  }
+  .tb-lbl span:last-child {
+    color: var(--muted);
+  }
+  .tb-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .tb-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .f1 {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .f2 {
+    background: linear-gradient(90deg, var(--accent3), var(--accent));
+  }
+  .f3 {
+    background: linear-gradient(90deg, var(--accent2), #f56a6a);
+  }
+  .f4 {
+    background: var(--accent3);
+  }
+</style>
+
+<script>
+  // ─── Count up ───
+  const cObs = new IntersectionObserver(
+    (es) =>
+      es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target as HTMLElement;
+        const target = +(el?.dataset?.c || "0");
+        let s = null;
+        (function step(now) {
+          if (!s) s = now;
+          const p = Math.min((now - s) / 1800, 1),
+            ease = 1 - Math.pow(1 - p, 4);
+          el.textContent = Math.floor(ease * target).toLocaleString();
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = target.toLocaleString();
+        })(performance.now());
+        cObs.unobserve(el);
+      }),
+    { threshold: 0.5 },
+  );
+  document.querySelectorAll("[data-c]").forEach((el) => cObs.observe(el));
+
+  // ─── Tech bars ───
+  const bObs = new IntersectionObserver(
+    (es) =>
+      es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target as HTMLElement;
+        el.style.width = el.dataset.w || "0";
+      }),
+    { threshold: 0.3 },
+  );
+  document.querySelectorAll(".tb-fill").forEach((b) => bObs.observe(b));
+</script>

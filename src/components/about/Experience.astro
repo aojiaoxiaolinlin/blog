@@ -1,0 +1,155 @@
+---
+---
+<section id="timeline" class="tl-bg">
+  <div class="wrap">
+    <div class="section-hd rv">
+      <div><div class="section-label" style="font-size:.63rem;color:var(--accent);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px">工作经历</div>
+      <h2 class="section-title">Experience</h2></div>
+    </div>
+
+    <div class="timeline">
+      <!-- 1 -->
+      <div class="tl-item rv">
+        <div class="tl-dot"></div>
+        <div class="tl-connector"></div>
+        <div class="tl-period">2023.06 — 至今</div>
+        <div class="tl-header">
+          <div class="tl-role">Senior Graphics Engineer</div>
+          <span class="tl-badge">Full-time</span>
+        </div>
+        <div class="tl-company">ByteDance · 字节跳动</div>
+        <p class="tl-desc">
+          负责 Lark（飞书）Web 端渲染性能优化，引入 WebGPU 加速白板绘制管线，
+          实现 3× 笔迹延迟降低。主导内部 WebAssembly 工具链建设，
+          将核心图像处理模块从 JS 迁移到 Rust，单任务耗时降低 78%。
+        </p>
+        <div class="tl-techs">
+          <span class="tl-tech">WebGPU</span><span class="tl-tech">Rust</span>
+          <span class="tl-tech">WASM</span><span class="tl-tech">TypeScript</span>
+          <span class="tl-tech">Canvas API</span>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="tl-item rv d1">
+        <div class="tl-dot"></div>
+        <div class="tl-connector"></div>
+        <div class="tl-period">2021.07 — 2023.05</div>
+        <div class="tl-header">
+          <div class="tl-role">Frontend Engineer · 3D</div>
+          <span class="tl-badge">Full-time</span>
+        </div>
+        <div class="tl-company">网易互娱 · NetEase Games</div>
+        <p class="tl-desc">
+          参与游戏官网 3D 场景搭建，使用 Three.js 实现实时 PBR 材质渲染。
+          开发内部低代码 3D 组件编辑器，供美术团队快速配置游戏宣传页。
+          设计并实现基于 WebGL2 Instanced Rendering 的粒子系统，支持 10 万粒子实时渲染。
+        </p>
+        <div class="tl-techs">
+          <span class="tl-tech">Three.js</span><span class="tl-tech">WebGL2</span>
+          <span class="tl-tech">GLSL</span><span class="tl-tech">React</span>
+          <span class="tl-tech">Blender</span>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="tl-item rv d2">
+        <div class="tl-dot"></div>
+        <div class="tl-connector"></div>
+        <div class="tl-period">2020.06 — 2021.06</div>
+        <div class="tl-header">
+          <div class="tl-role">Frontend Intern</div>
+          <span class="tl-badge" style="color:var(--accent2);background:rgba(245,162,106,.1);border-color:rgba(245,162,106,.25)">Intern</span>
+        </div>
+        <div class="tl-company">阿里巴巴 · Alibaba</div>
+        <p class="tl-desc">
+          在淘宝 3D 商品展示团队实习，负责 WebXR 产品原型开发与 AR 试穿功能探索。
+          毕业前完成《WebGL 着色器优化》内部分享，获优秀实习生。
+        </p>
+        <div class="tl-techs">
+          <span class="tl-tech">WebXR</span><span class="tl-tech">Three.js</span>
+          <span class="tl-tech">JavaScript</span>
+        </div>
+      </div>
+
+      <!-- 教育 -->
+      <div class="tl-item rv d3">
+        <div class="tl-dot" style="border-color:var(--accent3)"></div>
+        <div class="tl-period" style="color:var(--accent3)">2017.09 — 2021.06</div>
+        <div class="tl-header">
+          <div class="tl-role">计算机科学与技术 · 本科</div>
+          <span class="tl-badge" style="color:var(--accent3);background:rgba(106,245,200,.08);border-color:rgba(106,245,200,.25)">Education</span>
+        </div>
+        <div class="tl-company" style="color:var(--accent3)">浙江大学 · Zhejiang University</div>
+        <p class="tl-desc">
+          主修计算机图形学、编译原理、操作系统。
+          毕业论文《基于 WebGL 的实时体渲染算法研究》，获优秀毕业论文。GPA 3.8/4.0。
+        </p>
+        <div class="tl-techs">
+          <span class="tl-tech">C++</span><span class="tl-tech">OpenGL</span>
+          <span class="tl-tech">算法与数据结构</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ══════════════════════════════════════
+   TIMELINE
+══════════════════════════════════════ */
+.tl-bg{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.timeline{position:relative;padding-left:32px;display:flex;flex-direction:column;gap:0}
+/* 纵轴线 */
+.timeline::before{
+  content:'';position:absolute;left:0;top:8px;bottom:8px;
+  width:1px;background:linear-gradient(to bottom,transparent,var(--accent) 10%,var(--accent) 90%,transparent)}
+.tl-item{
+  position:relative;padding:0 0 48px 48px;
+  cursor:none;
+}
+.tl-item:last-child{padding-bottom:0}
+/* 轴点 */
+.tl-dot{
+  position:absolute;left:-8px;top:6px;
+  width:16px;height:16px;border-radius:50%;
+  border:2px solid var(--accent);background:var(--bg2);
+  transition:background .3s,box-shadow .3s;z-index:2;
+}
+.tl-item:hover .tl-dot{
+  background:var(--accent);
+  box-shadow:0 0 0 4px rgba(124,106,245,.2),0 0 16px rgba(124,106,245,.4)}
+.tl-item:hover .tl-connector{opacity:1}
+.tl-connector{
+  position:absolute;left:8px;top:14px;height:calc(100% - 14px);
+  width:1px;background:linear-gradient(to bottom,var(--accent),transparent);
+  opacity:.25;transition:opacity .3s;
+}
+/* 时间标签 */
+.tl-period{
+  font-size:.63rem;color:var(--accent);letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.tl-period::after{content:'';height:1px;width:24px;background:var(--accent);opacity:.4}
+/* 主体 */
+.tl-header{display:flex;align-items:flex-start;justify-content:space-between;
+  gap:16px;margin-bottom:10px;flex-wrap:wrap}
+.tl-role{font-family:'Playfair Display',serif;font-size:1.2rem;
+  font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.25}
+.tl-badge{
+  padding:3px 10px;border-radius:2px;font-size:.58rem;letter-spacing:.12em;
+  text-transform:uppercase;flex-shrink:0;
+  background:rgba(124,106,245,.1);border:1px solid rgba(124,106,245,.25);color:var(--accent)}
+.tl-company{
+  font-size:.8rem;color:var(--accent2);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.tl-company::before{content:'@';opacity:.5}
+.tl-desc{font-family:'Noto Serif SC',serif;font-weight:400;
+  font-size:.9rem;color:var(--text2);line-height:1.85;max-width:640px}
+.tl-techs{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.tl-tech{padding:2px 8px;background:rgba(255,255,255,.04);
+  border:1px solid var(--border);border-radius:2px;
+  font-size:.6rem;color:var(--muted);letter-spacing:.08em}
+</style>

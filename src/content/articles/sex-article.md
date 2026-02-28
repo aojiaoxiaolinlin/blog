@@ -1,0 +1,146 @@
+---
+title: 测试MD
+description: 随笔杂谈测试。
+date: 2024-12-20
+tags: ["随笔"]
+layoutStyle: sm
+---
+
+## 随笔杂谈
+不要迷信最佳实践。
+
+[github](https://github.com)
+
+
+## BVH 结构
+
+Bounding Volume Hierarchy (BVH) 是加速光线追踪运算的关键。
+
+> BVH 是一种空间数据结构，通过将场景中的几何体组织成树形结构，可以高效地进行光线追踪运算。
+
+### GFM
+
+~~这段文字被划掉了~~
+
+- [x] 已完成的任务
+- [ ] 未完成的任务
+
+| 标题 1 | 标题 2 |
+| ------ | ------ |
+| 内容 1 | 内容 2 |
+
+
+### 代码渲染
+
+
+```rust title="rust"
+// 这是一个演示代码块
+fn main() {
+    let a = "as";
+    let a = Some(1);
+    println!("Hello, WebGPU!");
+}
+```
+
+### 哈哈哈
+
+```wgsl title="wgsl" mark={5,10-14}
+fn main() {
+  let edge1 = v1 - v0;   // 普通行
+  let edge2 = v2 - v0;   // 普通行
+  let h = cross(ray_dir, edge2);
+  let a = dot(edge1, h); // ← 高亮行 5
+}
+```
+
+```bash frame="terminal"
+$ wgpu render --pipeline raytracing --spp 16
+✓ Adapter: Apple M3 Pro (Metal)
+✓ Pipeline compiled in 234ms
+▶ Rendering 2560×1440 @ 144fps
+```
+
+```rust
+use langchain::ReactAgent;
+use langchain_core::message::Message;
+use langchain_openai::ChatOpenAIBuilder;
+use langgraph::checkpoint::{RedisSaver, RedisSaverConfig};
+use std::{env, sync::Arc};
+use tracing_subscriber::EnvFilter;
+
+const BASE_URL: &str = "https://api.siliconflow.cn/v1";
+const MODEL: &str = "deepseek-ai/DeepSeek-V3.2";
+
+#[tokio::main]
+async fn main() {
+    let filter = EnvFilter::new("agent_struct=DEBUG,langchain=DEBUG,langgraph=DEBUG");
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::DEBUG)
+        .with_env_filter(filter)
+        .pretty()
+        .init();
+
+    let api_key = env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set");
+    // 注意，运行此示例会在 database_url 的数据中创建名为 langchain_rs_checkpoint 的键，如果冲突则会失败
+    let database_url = env::var("REDIS_URL").expect("REDIS_URL must be set");
+
+    let model = ChatOpenAIBuilder::from_base(MODEL, BASE_URL, api_key.as_str()).build();
+
+    let checkpointer = Arc::new(
+        RedisSaver::new(RedisSaverConfig::from_url(database_url))
+            .await
+            .unwrap(),
+    );
+
+    let agent = ReactAgent::builder(model)
+        .with_checkpointer(checkpointer)
+        .with_system_prompt("你是一个聊天AI助手，回答要简洁有趣，要遵循 user 命令")
+        .build();
+
+    let result = agent
+        .invoke(Message::user("我给你取名叫老大！"), Some("redis001"))
+        .await
+        .unwrap();
+
+    println!("{}", result.last_message().unwrap().to_pretty());
+
+    let result = agent
+        .invoke(Message::user("你叫什么名字？"), Some("redis001"))
+        .await
+        .unwrap();
+
+    println!("{}", result.last_message().unwrap().to_pretty());
+}
+```
+
+```typescript
+const a = () => {
+    console.log("哈哈");
+}
+```
+
+### 插件功能测试
+
+#### 1. 数学公式测试 (remark-math + rehype-katex)
+渲染方程可以表示为：
+$$
+L_o(x, \omega_o) = L_e(x, \omega_o) + \int_{\Omega} f_r(x, \omega_i, \omega_o) L_i(x, \omega_i) (\omega_i \cdot n) d\omega_i
+$$
+其中 $L_o$ 是从点 $x$ 沿方向 $\omega_o$ 发出的光。
+
+#### 2. 自定义指令测试 (remark-directive)
+:::note
+这是一个基于 `remark-directive` 渲染出来的原生警示框效果！不用手写 JSX 组件，直接用 Markdown 语法即可。
+:::
+
+:::tip
+这是一个原生的 Tip 提示。
+:::
+
+#### 3. 外部链接行为测试 (rehype-external-links)
+这里有一个外部链接：[点击访问我的 Github](https://github.com/) 
+你应该能在它的 HTML 里看见 `target="_blank"` 和 `rel="noopener noreferrer"`。
+
+#### 4. 本地图片尺寸自动读取测试 (rehype-img-size)
+此图片会自动被加上 width 和 height 属性，防止页面抖动 (CLS)：
+![示例图片](/favicon.svg)

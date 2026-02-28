@@ -1,0 +1,161 @@
+---
+interface Props {
+  activePath?: string;
+}
+
+const { activePath = '/' } = Astro.props;
+---
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">VOID<em>.dev</em></a>
+    <ul class="nav-links">
+      <li><a href="/#articles" class={activePath === '/' ? 'active' : ''}>文章</a></li>
+      <li><a href="/#lab">实验室</a></li>
+      <li><a href="/#notes">笔记</a></li>
+      <li><a href="/about" class={activePath === '/about' ? 'active' : ''}>关于</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-dot"><div class="pulse"></div><span>正在写作中</span></div>
+    </div>
+  </div>
+  <!-- TICKER directly under nav bar -->
+  <div class="ticker-bar">
+    <div class="ticker-track" id="ticker">
+      <span class="ticker-item">WebGPU Compute Shader</span>
+      <span class="ticker-item">Rust → WASM 性能优化</span>
+      <span class="ticker-item">着色器艺术实验</span>
+      <span class="ticker-item">浏览器渲染引擎内幕</span>
+      <span class="ticker-item">现代 CSS 排版</span>
+      <span class="ticker-item">编译器原理基础</span>
+      <span class="ticker-item">图形管线深度解析</span>
+      <span class="ticker-item">实时光线追踪算法</span>
+      <span class="ticker-item">WebGPU Compute Shader</span>
+      <span class="ticker-item">Rust → WASM 性能优化</span>
+      <span class="ticker-item">着色器艺术实验</span>
+      <span class="ticker-item">浏览器渲染引擎内幕</span>
+      <span class="ticker-item">现代 CSS 排版</span>
+      <span class="ticker-item">编译器原理基础</span>
+      <span class="ticker-item">图形管线深度解析</span>
+      <span class="ticker-item">实时光线追踪算法</span>
+    </div>
+  </div>
+</nav>
+
+<style>
+/* ═══════════════════ NAV ═══════════════════ */
+#nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  background: rgba(9, 9, 15, .92);
+  backdrop-filter: blur(20px);
+}
+.nav-inner {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  background: linear-gradient(135deg, #fff 30%, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+}
+.nav-logo em {
+  font-style: italic;
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  transition: color .2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width .3s cubic-bezier(.23, 1, .32, 1);
+}
+.nav-links a:hover {
+  color: #fff;
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-dot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .68rem;
+  color: var(--muted);
+}
+.pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent3);
+  box-shadow: 0 0 8px var(--accent3);
+  animation: pulseAnim 2s infinite;
+}
+
+/* ═══════════════════ TICKER ═══════════════════ */
+.ticker-bar {
+  background: rgba(6, 6, 14, .95);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+.ticker-track {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: tickerMove 38s linear infinite;
+}
+.ticker-item {
+  padding: 0 36px;
+  font-size: .63rem;
+  color: var(--muted);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.ticker-item::after {
+  content: '✦';
+  color: var(--accent);
+  font-size: .48rem;
+}
+@keyframes tickerMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+</style>

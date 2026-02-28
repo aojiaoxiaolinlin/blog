@@ -1,0 +1,204 @@
+---
+---
+<section id="projects">
+  <div class="wrap">
+    <div class="section-hd rv">
+      <div><div class="section-label" style="font-size:.63rem;color:var(--accent);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px">精选项目</div>
+      <h2 class="section-title">Featured Projects</h2></div>
+      <a href="#" style="font-size:.7rem;color:var(--muted);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--muted)'">
+        全部项目 →
+      </a>
+    </div>
+
+    <div class="proj-grid rv">
+      <!-- P1 -->
+      <div class="proj-card">
+        <div class="proj-vis">
+          <canvas id="pc1" width="400" height="180"></canvas>
+          <div class="proj-overlay"></div>
+          <span class="proj-status s-open">Open Source</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">wgpu-raytracer</div>
+          <p class="proj-desc">基于 WebGPU Compute Shader 的浏览器实时路径追踪器，支持 BVH 加速、PBR 材质、时域降噪。</p>
+          <div class="proj-footer">
+            <div class="proj-stack"><span>WebGPU</span><span>WGSL</span><span>Rust</span></div>
+            <a href="#" class="proj-link">★ 847</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="proj-card">
+        <div class="proj-vis">
+          <canvas id="pc2" width="400" height="180"></canvas>
+          <div class="proj-overlay"></div>
+          <span class="proj-status s-live">Live</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">WGSL Playground</div>
+          <p class="proj-desc">在线 WGSL 着色器编辑器，实时编译预览，带错误高亮和示例库，无需本地环境。</p>
+          <div class="proj-footer">
+            <div class="proj-stack"><span>WebGPU</span><span>CodeMirror</span><span>TS</span></div>
+            <a href="#" class="proj-link">→ 访问</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="proj-card">
+        <div class="proj-vis">
+          <canvas id="pc3" width="400" height="180"></canvas>
+          <div class="proj-overlay"></div>
+          <span class="proj-status s-wip">WIP</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">rust-wasm-imgproc</div>
+          <p class="proj-desc">Rust 编写的图像处理库，编译到 WASM，提供比纯 JS 快 8× 的滤镜、卷积、色彩空间转换。</p>
+          <div class="proj-footer">
+            <div class="proj-stack"><span>Rust</span><span>WASM</span><span>wasm-bindgen</span></div>
+            <a href="#" class="proj-link">★ 234</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ══════════════════════════════════════
+   PROJECTS
+══════════════════════════════════════ */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.proj-card{
+  border:1px solid var(--border);border-radius:8px;overflow:hidden;
+  background:var(--bg2);cursor:none;
+  transition:transform .35s cubic-bezier(.23,1,.32,1),
+             box-shadow .35s,border-color .35s;
+  display:flex;flex-direction:column;
+}
+.proj-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(124,106,245,.4);
+  box-shadow:0 24px 64px rgba(0,0,0,.7),0 0 0 1px rgba(124,106,245,.15)}
+.proj-vis{height:180px;position:relative;overflow:hidden;flex-shrink:0}
+.proj-vis canvas{display:block;width:100%;height:100%}
+.proj-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 40%,var(--bg2))}
+.proj-status{
+  position:absolute;top:12px;right:12px;padding:3px 9px;border-radius:2px;
+  font-size:.58rem;letter-spacing:.14em;text-transform:uppercase}
+.s-open{background:rgba(106,245,200,.12);color:var(--accent3);border:1px solid rgba(106,245,200,.3)}
+.s-wip{background:rgba(245,162,106,.12);color:var(--accent2);border:1px solid rgba(245,162,106,.3)}
+.s-live{background:rgba(124,106,245,.12);color:var(--accent);border:1px solid rgba(124,106,245,.3)}
+.proj-body{padding:20px 22px 24px;display:flex;flex-direction:column;flex:1}
+.proj-name{font-family:'Playfair Display',serif;font-size:1.1rem;
+  font-weight:700;margin-bottom:8px;line-height:1.3;color:#fff}
+.proj-desc{font-family:'Noto Serif SC',serif;font-size:.82rem;
+  color:var(--text2);line-height:1.72;flex:1}
+.proj-footer{
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between}
+.proj-stack{display:flex;gap:5px;flex-wrap:wrap}
+.proj-stack span{padding:2px 7px;background:rgba(255,255,255,.04);
+  border:1px solid var(--border);border-radius:2px;
+  font-size:.58rem;color:var(--muted)}
+.proj-link{font-size:.65rem;color:var(--accent);text-decoration:none;
+  letter-spacing:.06em;transition:opacity .2s}
+.proj-link:hover{opacity:.7}
+
+@media (max-width: 1024px) {
+  .proj-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+@media (max-width: 600px) {
+  .proj-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<script>
+/* ══ Project Canvas 1 — torus wireframe ══ */
+const cv1=document.getElementById('pc1') as HTMLCanvasElement | null;
+if(cv1) {
+  const ctx=cv1.getContext('2d');
+  if(ctx) {
+    const R=48,r=18,nu=32,nv=14;
+    const pts3d: {x:number, y:number, z:number}[]=[];
+    for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){
+      const u=i/nu*Math.PI*2,v=j/nv*Math.PI*2;
+      pts3d.push({x:(R+r*Math.cos(v))*Math.cos(u),y:(R+r*Math.cos(v))*Math.sin(u),z:r*Math.sin(v)});}
+    let rx=0,ry=0;
+    function rotX(p: {x:number,y:number,z:number},a: number){const y=p.y*Math.cos(a)-p.z*Math.sin(a),z=p.y*Math.sin(a)+p.z*Math.cos(a);return{...p,y,z}}
+    function rotY(p: {x:number,y:number,z:number},a: number){const x=p.x*Math.cos(a)+p.z*Math.sin(a),z=-p.x*Math.sin(a)+p.z*Math.cos(a);return{...p,x,z}}
+    function proj(p: {x:number,y:number,z:number}){const f=190,z=p.z+200;return{sx:p.x/z*f+(cv1?.width||400)/2,sy:p.y/z*f+(cv1?.height||180)/2,d:z}}
+    (function draw(){
+      if(!cv1 || !ctx) return;
+      ctx.fillStyle='#050512';ctx.fillRect(0,0,cv1.width,cv1.height);
+      const tf=pts3d.map(p=>proj(rotY(rotX(p,rx),ry)));
+      for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){
+        const a=tf[i*nv+j],b=tf[i*nv+(j+1)%nv],c=tf[((i+1)%nu)*nv+j];
+        const al=Math.min(1,(a.d-140)/130);
+        ctx.strokeStyle=`rgba(124,106,245,${al*.65})`;ctx.lineWidth=.7;
+        ctx.beginPath();ctx.moveTo(a.sx,a.sy);ctx.lineTo(b.sx,b.sy);ctx.stroke();
+        ctx.strokeStyle=`rgba(106,245,200,${al*.3})`;
+        ctx.beginPath();ctx.moveTo(a.sx,a.sy);ctx.lineTo(c.sx,c.sy);ctx.stroke();}
+      rx+=.008;ry+=.013;requestAnimationFrame(draw);
+    })();
+  }
+}
+
+/* ══ Project Canvas 2 — noise field ══ */
+const cv2=document.getElementById('pc2') as HTMLCanvasElement | null;
+if(cv2) {
+  const ctx=cv2.getContext('2d');
+  if(ctx){
+    let t=0;
+    const p=new Array(256).fill(0).map((_,i)=>i).sort(()=>Math.random()-.5);
+    function fade(t: number){return t*t*t*(t*(t*6-15)+10)}
+    function lerp(t: number,a: number,b: number){return a+t*(b-a)}
+    function grad(h: number,x: number,y: number){h&=3;const u=h<2?x:y,v=h<2?y:x;return((h&1)?-u:u)+((h&2)?-v:v)}
+    function noise(x: number,y: number){const X=Math.floor(x)&255,Y=Math.floor(y)&255;
+      x-=Math.floor(x);y-=Math.floor(y);
+      return lerp(fade(y),lerp(fade(x),grad(p[X+p[Y]],x,y),grad(p[X+1+p[Y]],x-1,y)),
+                  lerp(fade(x),grad(p[X+p[Y+1]],x,y-1),grad(p[X+1+p[Y+1]],x-1,y-1)))}
+    (function draw(){
+      if(!cv2 || !ctx) return;
+      const id=ctx.createImageData(cv2.width,cv2.height),d=id.data;
+      for(let y=0;y<cv2.height;y++)for(let x=0;x<cv2.width;x++){
+        const n=noise(x/40+t,y/40)*0.5+0.5;
+        const i=(y*cv2.width+x)*4;
+        d[i]=Math.floor(n*80+40);d[i+1]=Math.floor(n*55+20);d[i+2]=Math.floor(n*160+80);d[i+3]=255}
+      ctx.putImageData(id,0,0);t+=.008;requestAnimationFrame(draw);
+    })();
+  }
+}
+
+/* ══ Project Canvas 3 — particles ══ */
+const cv3=document.getElementById('pc3') as HTMLCanvasElement | null;
+if(cv3){
+  const ctx=cv3.getContext('2d');
+  if(ctx){
+    const N=100,pts=Array.from({length:N},()=>({
+      x:Math.random()*(cv3.width||400),y:Math.random()*(cv3.height||180),
+      vx:(Math.random()-.5)*.8,vy:(Math.random()-.5)*.8,
+      r:Math.random()*1.6+.3,h:Math.floor(Math.random()*60+220)}));
+    (function draw(){
+      if(!cv3 || !ctx) return;
+      ctx.fillStyle='rgba(5,5,18,.16)';ctx.fillRect(0,0,cv3.width,cv3.height);
+      pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>cv3.width)p.vx*=-1;if(p.y<0||p.y>cv3.height)p.vy*=-1;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=`hsl(${p.h},70%,65%)`;ctx.fill()});
+      for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<50){ctx.strokeStyle=`rgba(106,245,200,${(1-d/50)*.3})`;ctx.lineWidth=.5;
+          ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke()}}
+      requestAnimationFrame(draw);
+    })();
+  }
+}
+</script>
