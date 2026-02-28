@@ -19,6 +19,28 @@ const { title = "LIN.DEV — 技术与思考的碎片" } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 
+		<script is:inline>
+			const theme = (() => {
+				if (
+					typeof localStorage !== "undefined" &&
+					localStorage.getItem("theme")
+				) {
+					return localStorage.getItem("theme");
+				}
+				if (
+					window.matchMedia("(prefers-color-scheme: light)").matches
+				) {
+					return "light";
+				}
+				return "dark";
+			})();
+			if (theme === "light") {
+				document.documentElement.setAttribute("data-theme", "light");
+			} else {
+				document.documentElement.setAttribute("data-theme", "dark");
+			}
+		</script>
+
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500&display=swap"

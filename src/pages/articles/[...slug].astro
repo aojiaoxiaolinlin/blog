@@ -6,6 +6,7 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 import Layout from "../../layouts/Layout.astro";
 import Blockquote from "../../components/mdx/Blockquote.astro";
+import ThemeToggle from "../../components/ThemeToggle.astro";
 
 export async function getStaticPaths() {
   const articles = await getCollection("articles");
@@ -44,13 +45,18 @@ const toc = headings
   <!-- NAV -->
   <nav id="nav">
     <div class="nav-inner">
-      <a class="nav-logo" href="/">VOID<em>.dev</em></a>
-      <span class="nav-reading">
-        <span class="nav-reading-title" id="navTitle"
-          >{article.data.title}
+      <div style="display:flex;align-items:center;gap:16px;">
+        <a class="nav-logo" href="/">VOID<em>.dev</em></a>
+        <span class="nav-reading">
+          <span class="nav-reading-title" id="navTitle"
+            >{article.data.title}
+          </span>
         </span>
-      </span>
-      <a class="nav-back" href="/">返回文章列表</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;">
+        <ThemeToggle />
+        <a class="nav-back" href="/">返回文章列表</a>
+      </div>
     </div>
   </nav>
 
@@ -261,7 +267,7 @@ const toc = headings
     left: 0;
     right: 0;
     z-index: 150;
-    background: rgba(12, 11, 16, 0.94);
+    background: var(--nav-bg);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
@@ -300,7 +306,7 @@ const toc = headings
     transition: color 0.2s;
   }
   .nav-back:hover {
-    color: #fff;
+    color: var(--text-primary);
   }
   .nav-back::before {
     content: "←";

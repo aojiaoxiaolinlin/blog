@@ -1,27 +1,93 @@
 @import "tailwindcss";
 
 :root {
-  /* 背景：去掉冷蓝偏紫，改为中性深暗，长时间阅读更友好 */
-  --bg: #0c0b10;
-  --bg2: #100f16;
-  --surface: #141320;
-  --surface2: #1a1928;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.14);
+  --bg:        #09090f;
+  --bg2:       #0d0d1a;
+  --surface:   #13131f;
+  --surface2:  #191928;
+  --border:    rgba(255,255,255,.07);
+  --border2:   rgba(255,255,255,.13);
+  --text-primary: #ffffff;
+  --text:      #e8e6f0;
+  --text2:     #9693b0;
+  --muted:     #6b6880;
 
-  /* 四级文字灰度层次 */
-  --text-primary: #f0eeff;   /* 标题、强调 — 最亮 */
-  --text:         #e2defc
-;   /* 正文主体 — 高可读性，略带暖白 */
-  --text2:        #9693b0;   /* 次要文字、摘要 */
-  --muted:        #5e5b72;   /* 辅助信息、时间戳 */
-
-  --accent: #7c6af5;
-  --accent-dim: rgba(124,106,245,0.12);
-  --accent2: #f5a26a;
-  --accent3: #6af5c8;
-  --red: #f56a8a;
+  --accent:    #7c6af5;
+  --accent-a:  rgba(124,106,245,.12);
+  --accent2:   #f5a26a;
+  --accent3:   #6af5c8;
+  --red:       #f56a6a;
   --col-prose: 672px;
+
+  /* 暗色模式专属补充（若需被浅色覆写） */
+  --nav-bg:        rgba(9,9,15,.92);
+  --ticker-bg:     rgba(6,6,14,.95);
+  --logo-from:     #fff;
+  --hs-num-color:  #fff;
+  --ft-logo-from:  #fff;
+  --noise-op:      .5;
+
+  /* hero 左侧与右侧的接缝渐变 */
+  --hero-seam: linear-gradient(to right, #09090f 0%, rgba(9,9,15,.65) 45%, transparent 100%);
+  --cur-color: #ffffff;
+  --cur-border: rgba(124,106,245,.6);
+}
+
+/* ── 浅色主题 ── */
+[data-theme="light"] {
+  --bg:        #f5f2ea;   /* 羊皮纸暖底 */
+  --bg2:       #edeadf;
+  --surface:   #e5e1d4;
+  --surface2:  #dcd8ca;
+  --border:    rgba(0,0,0,.09);
+  --border2:   rgba(0,0,0,.16);
+  --text-primary: #18162e;
+  --text:      #1c1a2e;   /* 深墨色主文字 */
+  --text2:     #4a4660;
+  --muted:     #88849e;
+
+  /* 浅背景上 accent 需更深，保证 AA 对比度 */
+  --accent:    #5340d8;
+  --accent-a:  rgba(83,64,216,.1);
+  --accent2:   #b85a10;
+  --accent3:   #158066;
+  --red:       #c43030;
+
+  --nav-bg:        rgba(245,242,234,.96);
+  --ticker-bg:     rgba(237,234,223,.98);
+  --logo-from:     #1c1a2e;
+  --hs-num-color:  #1c1a2e;
+  --ft-logo-from:  #1c1a2e;
+  --noise-op:      .2;
+
+  --hero-seam: linear-gradient(to right, #f5f2ea 0%, rgba(245,242,234,.65) 45%, transparent 100%);
+  --cur-color: #1c1a2e;
+  --cur-border: rgba(83,64,216,.45);
+}
+
+/* 过渡系统 */
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition:
+    background-color .38s cubic-bezier(.4,0,.2,1),
+    border-color     .38s cubic-bezier(.4,0,.2,1),
+    color            .28s cubic-bezier(.4,0,.2,1),
+    box-shadow       .38s cubic-bezier(.4,0,.2,1) !important;
+}
+
+/* 豁免不需要动画或者自身负责性能核心的元素 */
+html.theme-transition canvas,
+html.theme-transition .pulse,
+html.theme-transition .ticker-track,
+html.theme-transition .cur-d,
+html.theme-transition .cur-r,
+html.theme-transition .hero-eyebrow,
+html.theme-transition .hero-h1,
+html.theme-transition .hero-desc,
+html.theme-transition .hero-actions,
+html.theme-transition .hero-stats {
+  transition: none !important;
 }
 
 *, *::before, *::after {
@@ -53,9 +119,9 @@ body {
 
 /* CURSOR */
 .cur-d {
-  width: 7px;
-  height: 7px;
-  background: #fff;
+  width: 8px;
+  height: 8px;
+  background: var(--cur-color);
   border-radius: 50%;
   position: fixed;
   transform: translate(-50%, -50%);
@@ -64,20 +130,19 @@ body {
   mix-blend-mode: difference;
 }
 .cur-r {
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(255, 255, 255, .4);
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--cur-border);
   border-radius: 50%;
   position: fixed;
   transform: translate(-50%, -50%);
-  transition: width .22s cubic-bezier(.23, 1, .32, 1), height .22s;
+  transition: width .25s cubic-bezier(.23, 1, .32, 1), height .25s;
   z-index: 9999;
   pointer-events: none;
-  mix-blend-mode: difference;
 }
-body:has(a:hover, .btn:hover, button:hover, .toc-link:hover) .cur-r {
-  width: 52px;
-  height: 52px;
+body:has(a:hover, .btn:hover, button:hover, .toc-link:hover, .theme-toggle:hover) .cur-r {
+  width: 58px;
+  height: 58px;
 }
 
 /* NOISE */
@@ -88,7 +153,8 @@ body::after {
   z-index: 200;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
-  opacity: .5;
+  opacity: var(--noise-op);
+  transition: opacity .38s;
 }
 
 /* LAYOUT */
@@ -131,7 +197,7 @@ body::after {
 }
 .btn-fill:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(124, 106, 245, .35);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 40%, transparent);
 }
 .btn-fill:hover::before {
   opacity: 1;
@@ -139,13 +205,13 @@ body::after {
 .btn-line {
   padding: 14px 24px;
   color: var(--muted);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border2);
   border-radius: 2px;
   transition: color .2s, border-color .2s, transform .2s;
 }
 .btn-line:hover {
-  color: #fff;
-  border-color: rgba(255, 255, 255, .25);
+  color: var(--text);
+  border-color: var(--border2);
   transform: translateY(-2px);
 }
 
@@ -158,10 +224,10 @@ body::after {
   font-size: .57rem;
   letter-spacing: .14em;
 }
-.tag.gpu { color: #f56a6a; border-color: rgba(245, 106, 106, .3); }
-.tag.wasm { color: var(--accent3); border-color: rgba(106, 245, 200, .3); }
-.tag.note { color: var(--accent2); border-color: rgba(245, 162, 106, .3); }
-.tag.web { color: var(--accent); border-color: rgba(124, 106, 245, .3); }
+.tag.gpu { color: var(--red); border-color: color-mix(in srgb, var(--red) 35%, transparent); }
+.tag.wasm { color: var(--accent3); border-color: color-mix(in srgb, var(--accent3) 35%, transparent); }
+.tag.note { color: var(--accent2); border-color: color-mix(in srgb, var(--accent2) 35%, transparent); }
+.tag.web { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
 
 /* SECTIONS */
 section {
@@ -208,7 +274,7 @@ section {
   transition: transform .2s;
 }
 .section-link:hover {
-  color: #fff;
+  color: var(--text);
 }
 .section-link:hover::after {
   transform: translateX(4px);
