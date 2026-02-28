@@ -25,6 +25,8 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
+import vercel from '@astrojs/vercel';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const voidDarkTheme = JSON.parse(
   readFileSync(path.join(__dirname, 'src/styles/void-dark-theme.json'), 'utf-8')
@@ -163,5 +165,7 @@ export default defineConfig({
     server: {
       allowedHosts: ['fiducially-nemoricole-wanita.ngrok-free.dev']
     }
-  }
+  },
+
+  adapter: vercel()
 });
