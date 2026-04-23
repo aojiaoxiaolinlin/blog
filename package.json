@@ -17,8 +17,6 @@
     "@astrojs/vercel": "^9.0.4",
     "@expressive-code/plugin-line-numbers": "^0.41.7",
     "@tailwindcss/vite": "^4.2.1",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
     "astro": "^5.17.1",
     "astro-expressive-code": "^0.41.7",
     "dayjs": "^1.11.19",
@@ -35,7 +33,11 @@
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3",
     "unist-util-visit": "^5.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3"
   }
 }

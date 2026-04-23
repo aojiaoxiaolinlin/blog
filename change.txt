@@ -1,0 +1,68 @@
+diff --git a/package.json b/package.json
+index 16684d5..81e80c0 100644
+--- a/package.json
++++ b/package.json
+@@ -17,8 +17,6 @@
+     "@astrojs/vercel": "^9.0.4",
+     "@expressive-code/plugin-line-numbers": "^0.41.7",
+     "@tailwindcss/vite": "^4.2.1",
+-    "@types/react": "^19.2.14",
+-    "@types/react-dom": "^19.2.3",
+     "astro": "^5.17.1",
+     "astro-expressive-code": "^0.41.7",
+     "dayjs": "^1.11.19",
+@@ -35,7 +33,11 @@
+     "remark-gfm": "^4.0.1",
+     "remark-math": "^6.0.0",
+     "tailwindcss": "^4.2.1",
+-    "typescript": "^5.9.3",
+     "unist-util-visit": "^5.1.0"
++  },
++  "devDependencies": {
++    "typescript": "^5.9.3",
++    "@types/react": "^19.2.14",
++    "@types/react-dom": "^19.2.3"
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 5a8970a..147930b 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -29,12 +29,6 @@ importers:
+       '@tailwindcss/vite':
+         specifier: ^4.2.1
+         version: 4.2.1(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1)(yaml@2.8.2))
+-      '@types/react':
+-        specifier: ^19.2.14
+-        version: 19.2.14
+-      '@types/react-dom':
+-        specifier: ^19.2.3
+-        version: 19.2.3(@types/react@19.2.14)
+       astro:
+         specifier: ^5.17.1
+         version: 5.18.0(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.31.1)(rollup@4.59.0)(typescript@5.9.3)(yaml@2.8.2)
+@@ -83,12 +77,19 @@ importers:
+       tailwindcss:
+         specifier: ^4.2.1
+         version: 4.2.1
+-      typescript:
+-        specifier: ^5.9.3
+-        version: 5.9.3
+       unist-util-visit:
+         specifier: ^5.1.0
+         version: 5.1.0
++    devDependencies:
++      '@types/react':
++        specifier: ^19.2.14
++        version: 19.2.14
++      '@types/react-dom':
++        specifier: ^19.2.3
++        version: 19.2.3(@types/react@19.2.14)
++      typescript:
++        specifier: ^5.9.3
++        version: 5.9.3
+ 
+ packages:
+ 
