@@ -1,0 +1,24 @@
+---
+import ThemeToggle from "../ThemeToggle.astro";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-group">
+      <a class="nav-logo" href="/">VOID<em>.dev</em></a>
+      <span class="nav-reading">
+        <span class="nav-reading-title" id="navTitle">{title}</span>
+      </span>
+    </div>
+    <div class="nav-actions">
+      <ThemeToggle />
+      <a class="nav-back" href="/">返回文章列表</a>
+    </div>
+  </div>
+</nav>

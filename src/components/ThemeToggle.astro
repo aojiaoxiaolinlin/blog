@@ -1,5 +1,5 @@
 ---
-
+import "../styles/components/theme-toggle.css";
 ---
 
 <button id="theme-toggle" aria-label="Toggle theme" class="theme-toggle">
@@ -40,43 +40,6 @@
         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
     </svg>
 </button>
-
-<style>
-    .theme-toggle {
-        background: transparent;
-        border: none;
-        color: var(--muted);
-        cursor: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 6px;
-        border-radius: 4px;
-        transition:
-            color 0.2s,
-            background-color 0.2s;
-    }
-    .theme-toggle:hover {
-        color: var(--text-primary);
-        background-color: var(--border);
-    }
-
-    /* Default is dark theme, show moon */
-    .theme-toggle .sun-icon {
-        display: none;
-    }
-    .theme-toggle .moon-icon {
-        display: block;
-    }
-
-    /* Light theme, show sun */
-    :global([data-theme="light"]) .theme-toggle .sun-icon {
-        display: block;
-    }
-    :global([data-theme="light"]) .theme-toggle .moon-icon {
-        display: none;
-    }
-</style>
 
 <script>
     function applyTheme(theme: string, animate: boolean) {

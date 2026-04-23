@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import "../../styles/note-page.css";
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
@@ -50,39 +51,3 @@ const formatDate = (date: Date) => {
   </div>
   <Footer />
 </Layout>
-
-<style>
-  .note-container {
-    padding-top: 160px;
-    padding-bottom: 120px;
-    max-width: 680px;
-    margin: 0 auto;
-  }
-  .note-paper {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 60px 50px;
-    border-radius: 8px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  }
-  .note-title {
-    font-family: "Playfair Display", serif;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 16px;
-    color: var(--accent);
-  }
-  .note-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px dashed var(--border);
-    color: var(--muted);
-    font-size: 0.8rem;
-  }
-
-  /* 笔记同样复用 article-content 的排版风格 (全局生效) */
-</style>

@@ -25,7 +25,7 @@ const resolvedTitle = title ?? defaults[type].title;
 <div class={`callout ${type}`}>
   <span class="callout-icon">{resolvedIcon}</span>
   <div class="callout-body">
-    <div class="callout-title">{resolvedTitle}</div>
+    <div class="callout-title mono-label">{resolvedTitle}</div>
     <slot />
   </div>
 </div>

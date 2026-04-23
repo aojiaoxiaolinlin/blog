@@ -1,0 +1,119 @@
+/* NEWSLETTER */
+.nl {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: var(--space-13) 0;
+}
+
+.nl-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-13);
+  align-items: center;
+}
+
+.nl-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.nl-title em {
+  font-style: italic;
+  color: var(--accent2);
+}
+
+.nl-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3-5);
+}
+
+.nl-copy {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.75;
+  font-family: "Noto Serif SC", serif;
+  font-weight: 300;
+}
+
+.nl-meta {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.nl-row {
+  display: flex;
+}
+
+.nl-input {
+  flex: 1;
+  padding: calc(var(--space-3) + var(--space-1) + var(--space-1-5))
+    calc(var(--space-4) + var(--space-1-5));
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-right: none;
+  border-radius: var(--radius-xs) 0 0 var(--radius-xs);
+  color: var(--text);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.nl-input:focus {
+  border-color: var(--accent);
+}
+
+.nl-input::placeholder {
+  color: var(--muted);
+}
+
+.nl-btn {
+  padding: calc(var(--space-3) + var(--space-1) + var(--space-1-5))
+    calc(var(--space-6) + var(--space-1-5));
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--text-ui);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: background 0.2s;
+}
+
+.nl-btn:hover {
+  background: #6b59e0;
+}
+
+@media (max-width: 1024px) {
+  .nl-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+}
+
+@media (max-width: 720px) {
+  .nl {
+    padding: var(--space-12) 0;
+  }
+
+  .nl-row {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .nl-input {
+    border-right: var(--line-hair) solid var(--border);
+    border-radius: var(--radius-xs);
+  }
+
+  .nl-btn {
+    width: 100%;
+    border-radius: var(--radius-xs);
+  }
+}

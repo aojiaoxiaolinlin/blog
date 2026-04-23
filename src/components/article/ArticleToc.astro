@@ -1,0 +1,59 @@
+---
+interface TocItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  items: TocItem[];
+  minutesRead: number;
+}
+
+const { items, minutesRead } = Astro.props;
+---
+
+<aside class="toc-sidebar">
+  <svg width="0" height="0" class="toc-ring-defs">
+    <defs>
+      <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#7c6af5"></stop>
+        <stop offset="100%" stop-color="#f5a26a"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="toc-label mono-label">目录</div>
+  <ul class="toc-list" id="toc">
+    {
+      items.map((heading) => (
+        <li class="toc-item">
+          <a
+            class={`toc-link ${heading.depth === 3 ? "h3" : ""}`}
+            href={`#${heading.slug}`}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="toc-stats">
+    <div class="toc-stat">
+      <div class="toc-stat-label mono-label">阅读时间</div>
+      <div class="toc-stat-val">
+        {minutesRead}
+        <em>分钟</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="reading-ring">
+    <svg width="40" height="40" class="ring-svg">
+      <circle class="ring-bg" cx="20" cy="20" r="18"></circle>
+      <circle class="ring-fill" id="ringFill" cx="20" cy="20" r="18"></circle>
+    </svg>
+    <span class="ring-label" id="ringPct">0% 已读</span>
+  </div>
+</aside>

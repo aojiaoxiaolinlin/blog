@@ -1,20 +1,20 @@
 ---
+import SectionHeader from "../ui/SectionHeader.astro";
+import "../../styles/components/about-skills.css";
 
+const legendItems = [
+  { label: "图形/GPU", tone: "accent" },
+  { label: "前端工程", tone: "accent-2" },
+  { label: "系统编程", tone: "accent-3" },
+  { label: "技术写作", tone: "danger" },
+  { label: "工程设计", tone: "violet" },
+  { label: "算法基础", tone: "mint" },
+];
 ---
 
 <section id="skills">
   <div class="wrap">
-    <div class="section-hd rv">
-      <div>
-        <div
-          class="section-label"
-          style="font-size:.63rem;color:var(--accent);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px"
-        >
-          技术能力
-        </div>
-        <h2 class="section-title">Skills & Expertise</h2>
-      </div>
-    </div>
+    <SectionHeader label="技术能力" title="Skills & Expertise" />
 
     <div class="skills-layout">
       <!-- 雷达图 -->
@@ -44,24 +44,14 @@
           <g id="radar-labels"></g>
         </svg>
         <div class="radar-legend">
-          <div class="rl-item">
-            <div class="rl-dot" style="background:var(--accent)"></div>图形/GPU
-          </div>
-          <div class="rl-item">
-            <div class="rl-dot" style="background:var(--accent2)"></div>前端工程
-          </div>
-          <div class="rl-item">
-            <div class="rl-dot" style="background:var(--accent3)"></div>系统编程
-          </div>
-          <div class="rl-item">
-            <div class="rl-dot" style="background:var(--red)"></div>技术写作
-          </div>
-          <div class="rl-item">
-            <div class="rl-dot" style="background:#b57af5"></div>工程设计
-          </div>
-          <div class="rl-item">
-            <div class="rl-dot" style="background:#7af5c4"></div>算法基础
-          </div>
+          {
+            legendItems.map((item) => (
+              <div class="rl-item">
+                <div class:list={["rl-dot", `is-${item.tone}`]}></div>
+                {item.label}
+              </div>
+            ))
+          }
         </div>
       </div>
 
@@ -113,154 +103,6 @@
     </div>
   </div>
 </section>
-
-<style>
-  /* ══════════════════════════════════════
-   SKILLS  — 雷达图 + 分类卡片
-══════════════════════════════════════ */
-  .skills-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: start;
-  }
-
-  /* 左：雷达图 */
-  .radar-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 40px 32px 32px;
-  }
-  .radar-title {
-    font-size: 0.63rem;
-    color: var(--muted);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-bottom: 32px;
-  }
-  #radar-svg {
-    display: block;
-    overflow: visible;
-  }
-  :global(.radar-axis-label) {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.62rem;
-    fill: var(--muted);
-    dominant-baseline: middle;
-  }
-  .radar-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 24px;
-    justify-content: center;
-  }
-  .rl-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.63rem;
-    color: var(--text2);
-  }
-  .rl-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  /* 右：分类技能卡 */
-  .skill-cats {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-  .skill-cat-title {
-    font-size: 0.63rem;
-    color: var(--muted);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .skill-tags {
-    display: flex;
-    font-family: "JetBrains Mono", monospace;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .sk {
-    padding: 6px 14px;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    font-size: 0.68rem;
-    letter-spacing: 0.06em;
-    cursor: none;
-    transition:
-      color 0.2s,
-      border-color 0.2s,
-      background 0.2s,
-      transform 0.15s;
-    position: relative;
-    overflow: hidden;
-  }
-  .sk::before {
-    content: attr(data-pct *);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    width: 0;
-    background: currentColor;
-    opacity: 0.4;
-    transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-  .sk:hover {
-    transform: translateY(-2px);
-  }
-  .sk.gpu {
-    color: var(--red);
-    border-color: rgba(245, 106, 106, 0.3);
-    background: rgba(245, 106, 106, 0.05);
-  }
-  .sk.gpu:hover {
-    background: rgba(245, 106, 106, 0.1);
-  }
-  .sk.web {
-    color: var(--accent);
-    border-color: rgba(124, 106, 245, 0.3);
-    background: rgba(124, 106, 245, 0.05);
-  }
-  .sk.web:hover {
-    background: rgba(124, 106, 245, 0.12);
-  }
-  .sk.sys {
-    color: var(--accent3);
-    border-color: rgba(106, 245, 200, 0.3);
-    background: rgba(106, 245, 200, 0.05);
-  }
-  .sk.sys:hover {
-    background: rgba(106, 245, 200, 0.1);
-  }
-  .sk.tool {
-    color: var(--accent2);
-    border-color: rgba(245, 162, 106, 0.3);
-    background: rgba(245, 162, 106, 0.05);
-  }
-  .sk.tool:hover {
-    background: rgba(245, 162, 106, 0.1);
-  }
-
-  @media (max-width: 900px) {
-    .skills-layout {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-  }
-</style>
 
 <script>
   /* ══ Radar Chart ══ */

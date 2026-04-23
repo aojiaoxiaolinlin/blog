@@ -1,0 +1,44 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  date: string;
+  lastModified: string;
+  minutesRead: number;
+  tags?: string[];
+}
+
+const { title, description, date, lastModified, minutesRead, tags = [] } =
+  Astro.props;
+
+const getTagClass = (tag: string) =>
+  tag.toLowerCase() === "webgpu" ? "ah-tag gpu" : "ah-tag";
+---
+
+<header class="article-header">
+  <div class="ah-meta">
+    {
+      tags.map((tag) => (
+        <>
+          <span class={getTagClass(tag)}>{tag}</span>
+          <span class="ah-sep">·</span>
+        </>
+      ))
+    }
+    <span>{date}</span>
+    <span class="ah-sep">·</span>
+    <span>⌛ {minutesRead} 分钟阅读</span>
+  </div>
+  <h1 class="ah-title">{title}</h1>
+  {description && <p class="ah-subtitle">{description}</p>}
+  <div class="ah-footer">
+    <div class="ah-author">
+      <div class="ah-avatar">V</div>
+      <span class="ah-author-name">void</span>
+    </div>
+    <div class="ah-divider"></div>
+    <span>3,240 次阅读</span>
+    <div class="ah-divider"></div>
+    <span>上次更新: {lastModified}</span>
+  </div>
+</header>

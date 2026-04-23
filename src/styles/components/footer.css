@@ -1,0 +1,41 @@
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: calc(var(--space-10) - var(--space-1)) 0;
+}
+
+.ft-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ft-logo {
+  font-family: "Playfair Display", serif;
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 30%, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ft-links {
+  display: flex;
+  gap: calc(var(--space-5) + var(--space-1-5));
+}
+
+.ft-links a {
+  font-size: var(--text-lg);
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.ft-links a:hover {
+  color: #fff;
+}
+
+.ft-copy {
+  font-size: var(--text-md);
+  color: var(--muted);
+}

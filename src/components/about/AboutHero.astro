@@ -1,8 +1,8 @@
 ---
-
+import "../../styles/components/about-hero.css";
 ---
 
-<section class="hero">
+<section class="about-hero">
     <!-- 左侧文字 -->
     <div class="hero-l">
         <div class="hero-eyebrow"><span></span>个人简历 · 关于我</div>
@@ -18,9 +18,7 @@
         <p class="hero-bio">
             图形工程师 & 技术写作者。痴迷于把晦涩的 GPU
             管线变成能在浏览器跑起来的实验。
-            相信好的工程美学和好的代码一样重要——两者都是关于<em
-                style="font-style:italic;color:var(--accent2)">可读性</em
-            >的。
+            相信好的工程美学和好的代码一样重要——两者都是关于<em class="hero-bio-em">可读性</em>的。
         </p>
 
         <div class="hero-actions">
@@ -42,323 +40,37 @@
         <div class="hero-card hc1">
             <div class="hc-label">工作经验</div>
             <div class="hc-val">
-                5<span style="font-size:.9rem;opacity:.6"> yr</span>
+                5<span class="hc-unit"> yr</span>
             </div>
             <div class="hc-sub">图形渲染 & 前端工程</div>
             <div class="hc-bar">
-                <div class="hc-bar-fill" style="width:82%"></div>
+                <div class="hc-bar-fill fill-82"></div>
             </div>
         </div>
 
         <div class="hero-card hc2">
             <div class="hc-label">开源贡献</div>
             <div class="hc-val">
-                1.2<span style="font-size:.9rem;opacity:.6">k</span>
+                1.2<span class="hc-unit">k</span>
             </div>
             <div class="hc-sub">GitHub Stars · 12 repositories</div>
             <div class="hc-bar">
-                <div
-                    class="hc-bar-fill"
-                    style="width:65%;background:linear-gradient(90deg,var(--accent3),var(--accent))"
-                >
-                </div>
+                <div class="hc-bar-fill fill-65 tone-mint"></div>
             </div>
         </div>
 
         <div class="hero-card hc3">
             <div class="hc-label">技术文章</div>
             <div class="hc-val">
-                47<span style="font-size:.9rem;opacity:.6"> +</span>
+                47<span class="hc-unit"> +</span>
             </div>
             <div class="hc-sub">WebGPU · Rust · 图形学</div>
             <div class="hc-bar">
-                <div
-                    class="hc-bar-fill"
-                    style="width:55%;background:linear-gradient(90deg,var(--accent2),var(--red))"
-                >
-                </div>
+                <div class="hc-bar-fill fill-55 tone-warm"></div>
             </div>
         </div>
     </div>
 </section>
-
-<style>
-    /* ══════════════════════════════════════
-   HERO  — 分屏，左文字右动态
-══════════════════════════════════════ */
-    .hero {
-        min-height: 100vh;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        padding-top: 60px;
-        position: relative;
-        /* overflow:hidden; REMOVED to prevent clipping on mobile */
-    }
-
-    /* 左 */
-    .hero-l {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 80px 56px 80px 48px;
-        position: relative;
-        z-index: 3;
-    }
-    .hero-eyebrow {
-        font-size: 0.68rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 24px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        opacity: 0;
-        animation: fU 0.6s 0.1s forwards;
-    }
-    .hero-eyebrow span {
-        width: 28px;
-        height: 1px;
-        background: var(--accent);
-        flex-shrink: 0;
-    }
-    .hero-name {
-        font-family: "Playfair Display", serif;
-        font-size: clamp(3rem, 5vw, 6rem);
-        font-weight: 900;
-        letter-spacing: -0.05em;
-        line-height: 1;
-        color: #fff;
-        margin-bottom: 8px;
-        opacity: 0;
-        animation: fU 0.75s 0.25s forwards;
-    }
-    .hero-alias {
-        font-family: "Playfair Display", serif;
-        font-style: italic;
-        font-size: clamp(1.4rem, 2.5vw, 2.2rem);
-        letter-spacing: -0.02em;
-        line-height: 1;
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 36px;
-        opacity: 0;
-        animation: fU 0.75s 0.35s forwards;
-    }
-    /* 打字机头衔 */
-    .typewriter-wrap {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 32px;
-        opacity: 0;
-        animation: fU 0.75s 0.48s forwards;
-    }
-    .tw-prefix {
-        font-size: 0.72rem;
-        color: var(--accent3);
-        letter-spacing: 0.06em;
-    }
-    .tw-text {
-        font-size: 0.82rem;
-        color: var(--text);
-        letter-spacing: 0.04em;
-        min-height: 1.2em;
-    }
-    .tw-cursor {
-        display: inline-block;
-        width: 2px;
-        height: 14px;
-        background: var(--accent);
-        vertical-align: middle;
-        margin-left: 2px;
-        animation: blink 1s step-end infinite;
-    }
-    @keyframes blink {
-        0%,
-        100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0;
-        }
-    }
-
-    .hero-bio {
-        font-family: "Noto Serif SC", serif;
-        font-weight: 400;
-        font-size: 0.95rem;
-        color: var(--text2);
-        line-height: 1.9;
-        max-width: 440px;
-        margin-bottom: 48px;
-        opacity: 0;
-        animation: fU 0.75s 0.6s forwards;
-    }
-    .hero-actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        opacity: 0;
-        animation: fU 0.75s 0.72s forwards;
-    }
-
-    /* 右 */
-    .hero-r {
-        position: relative;
-        overflow: hidden;
-        background: var(--bg2);
-        border-left: none;
-    }
-    /* 左边缘渐变过渡 */
-    .hero-r::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 160px;
-        height: 100%;
-        background: linear-gradient(to right, var(--bg), transparent);
-        z-index: 5;
-        pointer-events: none;
-    }
-    #hero-cv {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-    .hero-grid-lines {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 2;
-        background-image:
-            linear-gradient(rgba(124, 106, 245, 0.05) 1px, transparent 1px),
-            linear-gradient(
-                90deg,
-                rgba(124, 106, 245, 0.05) 1px,
-                transparent 1px
-            );
-        background-size: 48px 48px;
-        mask-image: radial-gradient(
-            ellipse 80% 80% at 60% 50%,
-            black 30%,
-            transparent
-        );
-    }
-
-    /* 右侧悬浮信息卡 */
-    .hero-card {
-        position: absolute;
-        z-index: 6;
-        background: rgba(10, 10, 22, 0.86);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        padding: 16px 20px;
-        min-width: 190px;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-        animation: floatY 6s ease-in-out infinite;
-    }
-    .hc1 {
-        top: 25%;
-        right: 10%;
-        animation-delay: 0s;
-    }
-    .hc2 {
-        top: 55%;
-        left: 12%;
-        animation-delay: -2.5s;
-    }
-    .hc3 {
-        bottom: 12%;
-        right: 10%;
-        animation-delay: -4.5s;
-    }
-    @keyframes floatY {
-        0%,
-        100% {
-            transform: translateY(0) rotate(-0.5deg);
-        }
-        50% {
-            transform: translateY(-12px) rotate(0.5deg);
-        }
-    }
-    .hc-label {
-        font-size: 0.58rem;
-        color: var(--muted);
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-    }
-    .hc-val {
-        font-family: "Playfair Display", serif;
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #fff;
-        letter-spacing: -0.03em;
-        line-height: 1;
-    }
-    .hc-sub {
-        font-size: 0.65rem;
-        color: var(--text2);
-        margin-top: 4px;
-    }
-    .hc-bar {
-        height: 3px;
-        background: var(--border);
-        border-radius: 2px;
-        margin-top: 10px;
-        overflow: hidden;
-    }
-    .hc-bar-fill {
-        height: 100%;
-        border-radius: 2px;
-        background: linear-gradient(90deg, var(--accent), var(--accent2));
-    }
-    /* orbs */
-    .orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(90px);
-        pointer-events: none;
-        z-index: 1;
-    }
-    .orb1 {
-        width: 300px;
-        height: 300px;
-        background: rgba(124, 106, 245, 0.15);
-        top: 5%;
-        right: 0%;
-    }
-    .orb2 {
-        width: 240px;
-        height: 240px;
-        background: rgba(245, 162, 106, 0.1);
-        bottom: 10%;
-        left: 5%;
-    }
-    .orb3 {
-        width: 160px;
-        height: 160px;
-        background: rgba(106, 245, 200, 0.08);
-        top: 50%;
-        right: 15%;
-    }
-
-    @media (max-width: 900px) {
-        .hero {
-            grid-template-columns: 1fr;
-            min-height: auto;
-        }
-        .hero-r {
-            min-height: 50vh;
-        }
-    }
-</style>
 
 <script>
     /* ══ Typewriter ══ */

@@ -1,0 +1,81 @@
+/* LAB */
+.lab-bg {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.lc {
+  --panel-bg: var(--bg);
+  --panel-hover-border: var(--accent);
+  --panel-hover-shadow:
+    var(--shadow-lifted-lg),
+    0 0 0 var(--line-hair) var(--accent);
+}
+
+.lc-vis {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.lc-vis canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.lc-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, var(--bg));
+}
+
+.lc-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+}
+
+.lc-body {
+  padding: var(--space-5) calc(var(--space-5) + var(--space-1-5))
+    var(--space-6);
+}
+
+.lc-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.lc-desc {
+  font-size: var(--text-ui);
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.lc-tech {
+  margin-top: var(--space-3-5);
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+  .lab-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .lab-grid {
+    grid-template-columns: 1fr;
+  }
+}

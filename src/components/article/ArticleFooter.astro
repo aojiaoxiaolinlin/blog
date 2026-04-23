@@ -1,0 +1,19 @@
+---
+interface Props {
+  tags?: string[];
+}
+
+const { tags = [] } = Astro.props;
+---
+
+<footer class="article-footer">
+  <div class="af-tags">
+    {
+      tags.map((tag) => (
+        <a href="#" class="af-tag meta-chip">
+          {tag}
+        </a>
+      ))
+    }
+  </div>
+</footer>

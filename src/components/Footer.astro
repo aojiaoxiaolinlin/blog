@@ -1,4 +1,5 @@
 ---
+import "../styles/components/footer.css";
 ---
 <footer>
   <div class="wrap">
@@ -9,41 +10,3 @@
     </div>
   </div>
 </footer>
-
-<style>
-/* FOOTER */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 44px 0;
-}
-.ft-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.ft-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #fff 30%, var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.ft-links {
-  display: flex;
-  gap: 22px;
-}
-.ft-links a {
-  font-size: .7rem;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color .2s;
-}
-.ft-links a:hover {
-  color: #fff;
-}
-.ft-copy {
-  font-size: .66rem;
-  color: var(--muted);
-}
-</style>

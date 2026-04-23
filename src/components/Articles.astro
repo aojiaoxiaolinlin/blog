@@ -1,5 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
+import SectionHeader from "./ui/SectionHeader.astro";
+import "../styles/components/articles.css";
 
 const allArticles = await getCollection("articles");
 const sortedArticles = allArticles.sort(
@@ -32,14 +34,12 @@ const getTagColorClass = (tag: string) => {
 
 <section id="articles">
   <div class="wrap">
-    <div class="section-hd rv">
-      <div>
-        <div class="section-label">精选文章</div><h2 class="section-title">
-          最近写了些什么
-        </h2>
-      </div>
-      <a href="/articles" class="section-link">全部文章</a>
-    </div>
+    <SectionHeader
+      label="精选文章"
+      title="最近写了些什么"
+      href="/articles"
+      linkText="全部文章"
+    />
     <div class="art-grid rv">
       {
         articlesWithRender.map((article, index) => {
@@ -83,111 +83,3 @@ const getTagColorClass = (tag: string) => {
     </div>
   </div>
 </section>
-
-<style>
-  /* ARTICLES */
-  .art-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-  .ac {
-    background: var(--bg);
-    padding: 36px 32px;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: background 0.3s;
-  }
-  .ac:hover {
-    background: var(--surface);
-  }
-  .ac::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 0;
-    background: var(--accent);
-    transition: height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-  .ac:hover::before {
-    height: 100%;
-  }
-  .ac-feat {
-    grid-column: span 7;
-    background: linear-gradient(
-      135deg,
-      var(--bg) 60%,
-      rgba(124, 106, 245, 0.04)
-    );
-  }
-  .ac-sec {
-    grid-column: span 5;
-  }
-  .ac-sm {
-    grid-column: span 4;
-  }
-  .ac-num {
-    font-size: 5rem;
-    font-weight: 700;
-    font-family: "Playfair Display", serif;
-    color: rgba(124, 106, 245, 0.07);
-    position: absolute;
-    top: 12px;
-    right: 20px;
-    line-height: 1;
-    pointer-events: none;
-  }
-  .ac-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-    font-size: 0.63rem;
-    color: var(--muted);
-  }
-  .ac-title {
-    font-family: "Playfair Display", serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
-    margin-bottom: 10px;
-    transition: color 0.2s;
-  }
-  .ac-feat .ac-title {
-    font-size: 1.85rem;
-  }
-  .ac-sec .ac-title {
-    font-size: 1.3rem;
-  }
-  .ac-sm .ac-title {
-    font-size: 1.05rem;
-  }
-  .ac:hover .ac-title {
-    color: var(--accent);
-  }
-  .ac-excerpt {
-    font-size: 0.8rem;
-    color: var(--muted);
-    line-height: 1.8;
-    font-family: "Noto Serif SC", serif;
-    font-weight: 300;
-  }
-  .ac-sm .ac-excerpt {
-    display: none;
-  }
-  .ac-foot {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.65rem;
-    color: var(--muted);
-  }
-</style>

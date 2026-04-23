@@ -1,89 +1,23 @@
 ---
+import "../styles/components/newsletter.css";
 ---
 <div class="nl">
   <div class="wrap">
     <div class="nl-inner rv">
       <div>
-        <div class="section-label" style="margin-bottom:14px">订阅</div>
+        <div class="section-label mb-3.5">订阅</div>
         <h2 class="nl-title">不错过每一篇<br><em>值得阅读的文章</em></h2>
       </div>
       <div class="nl-form">
-        <p style="font-size:.82rem;color:var(--muted);line-height:1.75;font-family:'Noto Serif SC',serif;font-weight:300">每月约 2-3 封邮件，只包含真正有价值的内容。无广告，可随时退订。</p>
+        <p class="nl-copy">
+          每月约 2-3 封邮件，只包含真正有价值的内容。无广告，可随时退订。
+        </p>
         <div class="nl-row">
           <input class="nl-input" type="email" placeholder="your@email.com">
           <button class="nl-btn">订阅</button>
         </div>
-        <p style="font-size:.63rem;color:var(--muted)">已有 847 位读者订阅</p>
+        <p class="nl-meta">已有 847 位读者订阅</p>
       </div>
     </div>
   </div>
 </div>
-
-<style>
-/* NEWSLETTER */
-.nl {
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  padding: 80px 0;
-}
-.nl-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-.nl-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
-  font-weight: 700;
-  letter-spacing: -.03em;
-  line-height: 1.15;
-}
-.nl-title em {
-  font-style: italic;
-  color: var(--accent2);
-}
-.nl-form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.nl-row {
-  display: flex;
-}
-.nl-input {
-  flex: 1;
-  padding: 13px 18px;
-  background: rgba(255, 255, 255, .04);
-  border: 1px solid var(--border);
-  border-right: none;
-  border-radius: 2px 0 0 2px;
-  color: var(--text);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: .8rem;
-  outline: none;
-  transition: border-color .2s;
-}
-.nl-input:focus {
-  border-color: var(--accent);
-}
-.nl-input::placeholder {
-  color: var(--muted);
-}
-.nl-btn {
-  padding: 13px 26px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 0 2px 2px 0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: .75rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  cursor: none;
-  transition: background .2s;
-}
-.nl-btn:hover {
-  background: #6b59e0;
-}
-</style>

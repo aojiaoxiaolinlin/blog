@@ -1,0 +1,18 @@
+---
+const shareActions = [
+  "🔗 复制链接",
+  "🐦 分享到 Twitter",
+  "⭐ 收藏文章",
+];
+---
+
+<aside class="right-sidebar">
+  <div class="rs-label mono-label">分享文章</div>
+  <div class="rs-actions">
+    {
+      shareActions.map((label) => (
+        <button class="rs-btn ghost-action">{label}</button>
+      ))
+    }
+  </div>
+</aside>
