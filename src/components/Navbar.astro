@@ -14,10 +14,18 @@ const { activePath = "/" } = Astro.props;
     <a class="nav-logo" href="/">VOID<em>.dev</em></a>
     <ul class="nav-links">
       <li>
-        <a href="/#articles" class={activePath === "/" ? "active" : ""}>文章</a>
+        <a
+          href={activePath === "/" ? "/#articles" : "/articles"}
+          class={activePath === "/" || activePath === "/articles" ? "active" : ""}
+        >文章</a>
       </li>
       <li><a href="/#lab">实验室</a></li>
-      <li><a href="/#notes">笔记</a></li>
+      <li>
+        <a
+          href={activePath === "/" ? "/#notes" : "/notes"}
+          class={activePath === "/notes" ? "active" : ""}
+        >笔记</a>
+      </li>
       <li>
         <a href="/about" class={activePath === "/about" ? "active" : ""}
           >关于</a>
@@ -28,7 +36,35 @@ const { activePath = "/" } = Astro.props;
         <div class="pulse"></div><span>正在写作中</span>
       </div>
       <ThemeToggle />
+      <button
+        class="nav-menu-toggle"
+        type="button"
+        aria-label="打开导航菜单"
+        aria-expanded="false"
+        aria-controls="mobile-nav-panel"
+      >
+        <span></span>
+        <span></span>
+      </button>
     </div>
+  </div>
+  <div class="mobile-nav-panel" id="mobile-nav-panel" data-open="false">
+    <a
+      href={activePath === "/" ? "/#articles" : "/articles"}
+      class={activePath === "/" || activePath === "/articles" ? "active" : ""}
+    >
+      <span>01</span>文章
+    </a>
+    <a href="/#lab"><span>02</span>实验室</a>
+    <a
+      href={activePath === "/" ? "/#notes" : "/notes"}
+      class={activePath === "/notes" ? "active" : ""}
+    >
+      <span>03</span>笔记
+    </a>
+    <a href="/about" class={activePath === "/about" ? "active" : ""}>
+      <span>04</span>关于
+    </a>
   </div>
   <!-- TICKER directly under nav bar -->
   <div class="ticker-bar">
@@ -52,3 +88,29 @@ const { activePath = "/" } = Astro.props;
     </div>
   </div>
 </nav>
+
+<script>
+  const nav = document.getElementById("nav");
+  const toggle = nav?.querySelector(".nav-menu-toggle");
+  const panel = document.getElementById("mobile-nav-panel");
+
+  if (toggle && panel) {
+    const setOpen = (open: boolean) => {
+      panel.dataset.open = open ? "true" : "false";
+      toggle.setAttribute("aria-expanded", String(open));
+      nav?.classList.toggle("is-menu-open", open);
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(panel.dataset.open !== "true");
+    });
+
+    panel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setOpen(false));
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 720) setOpen(false);
+    });
+  }
+</script>

@@ -1,0 +1,68 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import TriangleDemo from "../../components/experiments/TriangleDemo.astro";
+import "../../styles/lab-triangle-page.css";
+---
+
+<Layout title="Rust + wgpu Triangle - VOID.dev">
+  <Navbar />
+
+  <main class="lab-triangle-page">
+    <div class="wrap">
+      <section class="lab-triangle-hero rv in">
+        <div class="lab-triangle-copy">
+          <div class="section-label">Lab / Triangle</div>
+          <h1>Rust + wgpu 的最小渲染闭环</h1>
+          <p>
+            这个实验页把博客工程和 Rust/WASM/WebGPU 连到了一起。
+            页面首次进入时才加载 wasm 包，再由 Rust 侧创建 `wgpu` 实例、配置
+            surface 和 pipeline，最后绘制一个最简单的彩色三角形。
+          </p>
+        </div>
+
+        <div class="lab-triangle-summary">
+          <div class="lab-summary-card">
+            <div class="mono-label">目标</div>
+            <strong>验证集成路径</strong>
+            <p>先打通工程链路，再往后叠加 uniform、交互、动画和更复杂的 shader。</p>
+          </div>
+          <div class="lab-summary-card">
+            <div class="mono-label">加载策略</div>
+            <strong>独立实验页懒加载</strong>
+            <p>避免首页和文章页被 wasm 初始化拖慢，内容站与实验页的边界保持清晰。</p>
+          </div>
+        </div>
+      </section>
+
+      <TriangleDemo />
+
+      <section class="lab-triangle-notes">
+        <article class="lab-note-card">
+          <h2>为什么先做三角形</h2>
+          <p>
+            三角形是最小的 GPU 渲染“Hello World”。只要它能稳定出图，后续的顶点缓冲、相机、
+            纹理、compute shader 都只是往同一条管线继续扩。
+          </p>
+        </article>
+        <article class="lab-note-card">
+          <h2>当前实现边界</h2>
+          <p>
+            现在只做单次绘制，不做持续动画；这样可以先确认 `wasm-pack -> Astro/Vite -> 浏览器 WebGPU`
+            的基础链路没有问题。
+          </p>
+        </article>
+        <article class="lab-note-card">
+          <h2>下一步最自然的扩展</h2>
+          <p>
+            可以继续加时间 uniform、窗口 resize 适配、参数面板，再逐步切到你真正想展示的
+            `rust + wgpu` 实时效果。
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

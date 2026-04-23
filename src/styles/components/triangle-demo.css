@@ -1,0 +1,123 @@
+.triangle-demo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.6fr);
+  gap: var(--space-7);
+  align-items: stretch;
+}
+
+.triangle-demo.is-compact {
+  grid-template-columns: 1fr;
+}
+
+.triangle-stage {
+  --panel-bg: #050512;
+  position: relative;
+  min-height: clamp(24rem, 58vw, 38rem);
+  overflow: hidden;
+}
+
+.triangle-demo.is-compact .triangle-stage {
+  min-height: 200px;
+}
+
+.triangle-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(124, 106, 245, 0.22), transparent 34%),
+    linear-gradient(135deg, #050512, #0a0a1a 55%, #050512);
+}
+
+.triangle-canvas[data-ready="unsupported"],
+.triangle-canvas[data-ready="error"] {
+  opacity: 0.55;
+}
+
+.triangle-overlay {
+  position: absolute;
+  left: var(--space-5);
+  right: var(--space-5);
+  bottom: var(--space-5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  pointer-events: none;
+}
+
+.triangle-kicker {
+  color: var(--accent3);
+}
+
+.triangle-status {
+  max-width: 22rem;
+  padding: var(--space-2) var(--space-3);
+  border: var(--line-hair) solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-full);
+  background: rgba(5, 5, 18, 0.72);
+  color: var(--text2);
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--text-xs);
+  text-align: right;
+  backdrop-filter: blur(12px);
+}
+
+.triangle-meta {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.triangle-card {
+  padding: var(--space-6);
+  border: var(--line-hair) solid var(--border);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent);
+}
+
+.triangle-card-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--text-2xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--space-2);
+}
+
+.triangle-card-value {
+  font-family: "Playfair Display", serif;
+  font-size: var(--text-2xl);
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.triangle-card p {
+  color: var(--text2);
+  font-size: var(--text-ui);
+  line-height: 1.75;
+}
+
+@media (max-width: 1024px) {
+  .triangle-demo {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .triangle-stage {
+    min-height: 22rem;
+  }
+
+  .triangle-overlay {
+    left: var(--space-4);
+    right: var(--space-4);
+    bottom: var(--space-4);
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .triangle-status {
+    text-align: left;
+  }
+}

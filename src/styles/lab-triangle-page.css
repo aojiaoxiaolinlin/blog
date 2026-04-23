@@ -1,0 +1,100 @@
+.lab-triangle-page {
+  padding-top: calc(var(--nav-height) + var(--ticker-height) + var(--space-13));
+  padding-bottom: var(--space-13);
+}
+
+.lab-triangle-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  gap: var(--space-10);
+  align-items: end;
+  margin-bottom: var(--space-11);
+}
+
+.lab-triangle-copy h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(3rem, 7vw, 5.2rem);
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+  margin-bottom: var(--space-4);
+}
+
+.lab-triangle-copy p {
+  max-width: 46rem;
+  color: var(--text2);
+  font-size: var(--text-body);
+  line-height: 1.8;
+}
+
+.lab-triangle-summary {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.lab-summary-card {
+  padding: var(--space-6);
+  border: var(--line-hair) solid var(--border);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent);
+}
+
+.lab-summary-card .mono-label {
+  margin-bottom: var(--space-2);
+}
+
+.lab-summary-card strong {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-family: "Playfair Display", serif;
+  font-size: var(--text-2xl);
+  color: var(--text-primary);
+}
+
+.lab-summary-card p {
+  color: var(--text2);
+  font-size: var(--text-ui);
+  line-height: 1.75;
+}
+
+.lab-triangle-notes {
+  margin-top: var(--space-10);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.lab-note-card {
+  padding: var(--space-6);
+  border: var(--line-hair) solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.lab-note-card h2 {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-body-lg);
+}
+
+.lab-note-card p {
+  color: var(--text2);
+  font-size: var(--text-ui);
+  line-height: 1.75;
+}
+
+@media (max-width: 1024px) {
+  .lab-triangle-hero,
+  .lab-triangle-notes {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .lab-triangle-page {
+    padding-top: calc(var(--nav-height) + var(--ticker-height) + var(--space-12));
+    padding-bottom: var(--space-12);
+  }
+
+  .lab-triangle-copy h1 {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+}

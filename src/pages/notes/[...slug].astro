@@ -5,11 +5,12 @@ import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 import Blockquote from "../../components/mdx/Blockquote.astro";
+import { formatDate } from "../../lib/content";
 
 export async function getStaticPaths() {
   const notes = await getCollection("notes");
   return notes.map((note) => ({
-    params: { slug: note.id },
+    params: { slug: note.slug },
     props: { note },
   }));
 }
@@ -21,16 +22,10 @@ export const components = {
   blockquote: Blockquote,
 };
 
-const formatDate = (date: Date) => {
-  const yy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-  return `${yy}.${mm}.${dd}`;
-};
 ---
 
 <Layout title={`${note.data.title} - 随笔笔记`}>
-  <Navbar />
+  <Navbar activePath="/notes" />
   <div class="note-container rv wrap">
     <div class="note-paper">
       <header class="note-header">

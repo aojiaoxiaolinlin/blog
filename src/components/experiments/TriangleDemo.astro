@@ -1,0 +1,62 @@
+---
+import "../../styles/components/triangle-demo.css";
+
+interface Props {
+  canvasId?: string;
+  compact?: boolean;
+}
+
+const { canvasId = "triangle-demo-canvas", compact = false } = Astro.props;
+const statusId = `${canvasId}-status`;
+---
+
+<section
+  class:list={["triangle-demo", compact && "is-compact"]}
+  data-triangle-demo
+  data-canvas-id={canvasId}
+  data-status-id={statusId}
+>
+  <div class="triangle-stage panel-card">
+    <canvas id={canvasId} class="triangle-canvas"></canvas>
+    <div class="triangle-overlay">
+      <div class="triangle-kicker mono-label">Rust + wgpu + WebGPU</div>
+      <div class="triangle-status" id={statusId}>等待初始化...</div>
+    </div>
+  </div>
+
+  <div class="triangle-meta">
+    <div class="triangle-card">
+      <div class="triangle-card-label">渲染内容</div>
+      <div class="triangle-card-value">单个彩色三角形</div>
+      <p>最小可运行版本，验证 Rust/WASM 与浏览器 WebGPU 管线已经打通。</p>
+    </div>
+    <div class="triangle-card">
+      <div class="triangle-card-label">技术路径</div>
+      <div class="triangle-card-value">WASM 懒加载</div>
+      <p>页面仅在进入实验区域时加载 wasm 包，不影响博客正文和归档页首屏。</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { mountTriangleDemo } from "../../lib/wasm/triangle-loader";
+
+  let resizeTimer = 0;
+
+  const initTriangles = () => {
+    document.querySelectorAll("[data-triangle-demo]").forEach((root) => {
+      const canvasId = root.getAttribute("data-canvas-id");
+      const statusId = root.getAttribute("data-status-id");
+
+      if (!canvasId || !statusId) return;
+      void mountTriangleDemo({ canvasId, statusId });
+    });
+  };
+
+  initTriangles();
+  document.addEventListener("astro:page-load", initTriangles);
+  window.addEventListener("resize", () => {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(initTriangles, 160);
+  });
+</script>

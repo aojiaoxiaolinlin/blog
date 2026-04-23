@@ -1,5 +1,14 @@
 ---
+import { getRecentArticles, getSiteStats } from "../lib/content-data";
+import { formatDate, getTagColorClass } from "../lib/content";
 import "../styles/components/home-hero.css";
+
+const [featuredArticles, siteStats] = await Promise.all([
+  getRecentArticles(3),
+  getSiteStats(),
+]);
+
+const experimentCount = 3;
 ---
 
 <div class="home-hero">
@@ -20,15 +29,15 @@ import "../styles/components/home-hero.css";
     </div>
     <div class="hero-stats">
       <div class="hs">
-        <div class="hs-num">47<em>+</em></div>
+        <div class="hs-num">{siteStats.articleCount}<em>+</em></div>
         <div class="hs-lbl">技术文章</div>
       </div>
       <div class="hs">
-        <div class="hs-num">12<em>×</em></div>
+        <div class="hs-num">{experimentCount}<em>×</em></div>
         <div class="hs-lbl">交互实验</div>
       </div>
       <div class="hs">
-        <div class="hs-num">2<em>y</em></div>
+        <div class="hs-num">{siteStats.writingDays}<em>d</em></div>
         <div class="hs-lbl">持续写作</div>
       </div>
     </div>
@@ -45,42 +54,58 @@ import "../styles/components/home-hero.css";
 
     <!-- Floating article preview cards -->
     <div class="fc fc-1">
-      <span class="fc-tag gpu">WebGPU</span>
-      <div class="fc-title">实时光线追踪渲染器</div>
+      <span class={`fc-tag ${getTagColorClass(featuredArticles[0]?.entry.data.tags[0] || "note")}`}>
+        {featuredArticles[0]?.entry.data.tags[0] || "文章"}
+      </span>
+      <div class="fc-title">{featuredArticles[0]?.entry.data.title}</div>
       <div class="fc-meta">
-        <span>18 min</span>
+        <span>{featuredArticles[0]?.metrics.minutesRead || 1} min</span>
         <div class="fc-bar">
           <div class="fc-bar-fill fill-78"></div>
         </div>
         <span class="fc-arrow accent">↗</span>
       </div>
-      <div class="fc-views">3,240 次阅读</div>
+      <div class="fc-views">
+        {featuredArticles[0] ? formatDate(featuredArticles[0].entry.data.date) : ""}
+      </div>
     </div>
 
     <div class="fc fc-2">
-      <span class="fc-tag wasm">Rust+WASM</span>
-      <div class="fc-title">WASM 性能极限探索</div>
+      <span class={`fc-tag ${getTagColorClass(featuredArticles[1]?.entry.data.tags[0] || "note")}`}>
+        {featuredArticles[1]?.entry.data.tags[0] || "文章"}
+      </span>
+      <div class="fc-title">{featuredArticles[1]?.entry.data.title}</div>
       <div class="fc-meta">
-        <span>12 min</span>
+        <span>{featuredArticles[1]?.metrics.minutesRead || 1} min</span>
         <div class="fc-bar">
           <div class="fc-bar-fill fill-56 tone-mint"></div>
         </div>
         <span class="fc-arrow mint">↗</span>
       </div>
-      <div class="fc-views">1,890 次阅读</div>
+      <div class="fc-views">
+        {featuredArticles[1]
+          ? `${featuredArticles[1].metrics.characterCount.toLocaleString()} 字`
+          : ""}
+      </div>
     </div>
 
     <div class="fc fc-3">
-      <span class="fc-tag css">WGSL</span>
-      <div class="fc-title">着色器噪声的数学原理</div>
+      <span class={`fc-tag ${getTagColorClass(featuredArticles[2]?.entry.data.tags[0] || "note")}`}>
+        {featuredArticles[2]?.entry.data.tags[0] || "文章"}
+      </span>
+      <div class="fc-title">{featuredArticles[2]?.entry.data.title}</div>
       <div class="fc-meta">
-        <span>10 min</span>
+        <span>{featuredArticles[2]?.metrics.minutesRead || 1} min</span>
         <div class="fc-bar">
           <div class="fc-bar-fill fill-43 tone-warm"></div>
         </div>
         <span class="fc-arrow warm">↗</span>
       </div>
-      <div class="fc-views">2,105 次阅读</div>
+      <div class="fc-views">
+        {featuredArticles[2]
+          ? `${featuredArticles[2].metrics.characterCount.toLocaleString()} 字`
+          : ""}
+      </div>
     </div>
   </div>
 </div>

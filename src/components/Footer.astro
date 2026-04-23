@@ -1,12 +1,21 @@
 ---
 import "../styles/components/footer.css";
+
+const footerLinks = [
+  { label: "文章", href: "/articles" },
+  { label: "笔记", href: "/notes" },
+  { label: "关于", href: "/about" },
+  { label: "联系", href: "/about#contact" },
+];
 ---
 <footer>
   <div class="wrap">
     <div class="ft-inner">
       <div class="ft-logo">VOID.dev</div>
-      <div class="ft-links"><a href="#">GitHub</a><a href="#">Twitter</a><a href="#">RSS</a><a href="#">邮件</a></div>
-      <p class="ft-copy">© 2025 · 用像素堆砌思考</p>
+      <div class="ft-links">
+        {footerLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+      </div>
+      <p class="ft-copy">© {new Date().getFullYear()} · 用像素堆砌思考</p>
     </div>
   </div>
 </footer>

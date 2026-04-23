@@ -1,28 +1,14 @@
 ---
-import { getCollection } from "astro:content";
 import SectionHeader from "./ui/SectionHeader.astro";
+import { getRecentNotes, getSiteStats } from "../lib/content-data";
+import {
+  formatNoteDate,
+  getEntryPath,
+  getTagColorClass,
+} from "../lib/content";
 import "../styles/components/notes.css";
 
-const allNotes = await getCollection("notes");
-const sortedNotes = allNotes.sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-const notes = sortedNotes.slice(0, 5);
-
-const formatNoteDate = (date: Date) => {
-  const yy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-  return { y: String(yy), md: `${mm}.${dd}` };
-};
-
-const getTagColorClass = (tag: string) => {
-  const t = tag.toLowerCase();
-  if (t.includes("gpu") || t.includes("glsl")) return "gpu";
-  if (t.includes("wasm") || t.includes("rust")) return "wasm";
-  if (t.includes("css") || t.includes("web")) return "web";
-  return "note";
-};
+const [notes, siteStats] = await Promise.all([getRecentNotes(5), getSiteStats()]);
 ---
 
 <section id="notes">
@@ -37,11 +23,11 @@ const getTagColorClass = (tag: string) => {
         />
         <div class="note-list">
           {
-            notes.map((note, index) => {
+            notes.map(({ entry: note }, index) => {
               const dt = formatNoteDate(note.data.date);
               return (
                 <a
-                  href={`/notes/${note.id}`}
+                  href={getEntryPath(note)}
                   class={`ni rv ${index > 0 ? `d${Math.min(index, 3)}` : ""}`}
                 >
                   <div class="ni-date">
@@ -69,57 +55,43 @@ const getTagColorClass = (tag: string) => {
         <div class="stat-row">
           <span class="stat-label">文章总数</span><span
             class="stat-val"
-            data-c="47">0</span
+            data-c={siteStats.articleCount}>0</span
           >
         </div>
         <div class="stat-row">
-          <span class="stat-label">总阅读量</span><span
+          <span class="stat-label">笔记总数</span><span
             class="stat-val"
-            data-c="128450">0</span
+            data-c={siteStats.noteCount}>0</span
           >
         </div>
         <div class="stat-row">
-          <span class="stat-label">交互实验</span><span
+          <span class="stat-label">总阅读分钟</span><span
             class="stat-val"
-            data-c="12">0</span
+            data-c={siteStats.totalReadMinutes}>0</span
           >
         </div>
         <div class="stat-row">
           <span class="stat-label">写作天数</span><span
             class="stat-val"
-            data-c="730">0</span
+            data-c={siteStats.writingDays}>0</span
           >
         </div>
         <div class="tech-panel">
           <div class="tech-panel-title">技术主题分布</div>
-          <div class="tb">
-            <div class="tb-lbl">
-              <span>WebGPU / 图形</span><span>42%</span>
-            </div><div class="tb-track">
-              <div class="tb-fill f1" data-w="42%"></div>
-            </div>
-          </div>
-          <div class="tb">
-            <div class="tb-lbl">
-              <span>Rust / WASM</span><span>28%</span>
-            </div><div class="tb-track">
-              <div class="tb-fill f2" data-w="28%"></div>
-            </div>
-          </div>
-          <div class="tb">
-            <div class="tb-lbl"><span>Web 前端</span><span>18%</span></div><div
-              class="tb-track"
-            >
-              <div class="tb-fill f3" data-w="18%"></div>
-            </div>
-          </div>
-          <div class="tb">
-            <div class="tb-lbl"><span>随笔思考</span><span>12%</span></div><div
-              class="tb-track"
-            >
-              <div class="tb-fill f4" data-w="12%"></div>
-            </div>
-          </div>
+          {
+            siteStats.tagDistribution.map((item) => (
+              <div class="tb">
+                <div class="tb-lbl">
+                  <span>{item.label}</span><span>{item.percentage}%</span>
+                </div><div class="tb-track">
+                  <div
+                    class={`tb-fill ${item.className}`}
+                    data-w={`${item.percentage}%`}
+                  ></div>
+                </div>
+              </div>
+            ))
+          }
         </div>
       </aside>
     </div>

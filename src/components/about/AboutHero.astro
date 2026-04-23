@@ -1,5 +1,8 @@
 ---
+import { getSiteStats } from "../../lib/content-data";
 import "../../styles/components/about-hero.css";
+
+const siteStats = await getSiteStats();
 ---
 
 <section class="about-hero">
@@ -49,11 +52,11 @@ import "../../styles/components/about-hero.css";
         </div>
 
         <div class="hero-card hc2">
-            <div class="hc-label">开源贡献</div>
+            <div class="hc-label">写作天数</div>
             <div class="hc-val">
-                1.2<span class="hc-unit">k</span>
+                {siteStats.writingDays}<span class="hc-unit"> d</span>
             </div>
-            <div class="hc-sub">GitHub Stars · 12 repositories</div>
+            <div class="hc-sub">Articles + Notes 持续更新中</div>
             <div class="hc-bar">
                 <div class="hc-bar-fill fill-65 tone-mint"></div>
             </div>
@@ -62,7 +65,7 @@ import "../../styles/components/about-hero.css";
         <div class="hero-card hc3">
             <div class="hc-label">技术文章</div>
             <div class="hc-val">
-                47<span class="hc-unit"> +</span>
+                {siteStats.articleCount}<span class="hc-unit"> +</span>
             </div>
             <div class="hc-sub">WebGPU · Rust · 图形学</div>
             <div class="hc-bar">

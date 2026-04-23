@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { formatDate } from "../../lib/content";
 
 dayjs.extend(utc);
 import "../../styles/article-page.css";
@@ -22,7 +23,7 @@ interface TocItem {
 export async function getStaticPaths() {
   const articles = await getCollection("articles");
   return articles.map((article) => ({
-    params: { slug: article.id },
+    params: { slug: article.slug },
     props: { article },
   }));
 }
@@ -34,14 +35,7 @@ export const components = {
   blockquote: Blockquote,
 };
 
-const formatDate = (date: Date) => {
-  const yy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-  return `${yy}.${mm}.${dd}`;
-};
-
-const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
+const lastModified = dayjs(remarkPluginFrontmatter.lastModified || article.data.date)
   .utc()
   .format("YYYY.MM.DD HH:mm:ss");
 
@@ -52,6 +46,7 @@ const toc = headings
   : [];
 
 const minutesRead = remarkPluginFrontmatter.minutesRead || 5;
+const characterCount = remarkPluginFrontmatter.characterCount || 0;
 const tags = article.data.tags || [];
 const articleDate = formatDate(article.data.date);
 ---
@@ -71,6 +66,7 @@ const articleDate = formatDate(article.data.date);
         date={articleDate}
         lastModified={lastModified}
         minutesRead={minutesRead}
+        characterCount={characterCount}
         tags={tags}
       />
 

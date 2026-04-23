@@ -1,0 +1,89 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { getArticles, getRenderedEntries, getSiteStats } from "../../lib/content-data";
+import {
+  formatDate,
+  getEntryPath,
+  getTagColorClass,
+} from "../../lib/content";
+import "../../styles/content-index.css";
+import "../../styles/components/articles.css";
+
+const [articles, siteStats] = await Promise.all([getArticles(), getSiteStats()]);
+const renderedArticles = await getRenderedEntries(articles);
+const latestArticle = renderedArticles[0];
+---
+
+<Layout title="文章归档 - VOID.dev">
+  <Navbar activePath="/articles" />
+
+  <main class="content-index-page">
+    <div class="wrap">
+      <section class="content-index-hero rv in">
+        <div>
+          <div class="section-label content-index-label">文章归档</div>
+          <h1 class="content-index-title">长期写作的技术笔记库</h1>
+          <p class="content-index-copy">
+            这里收纳所有文章，按发布时间倒序排列。
+            主题会集中在图形、Rust/WASM、前端工程和一些慢一点的技术思考。
+          </p>
+        </div>
+
+        <div class="content-index-summary">
+          <div class="content-summary-card">
+            <div class="content-summary-kicker">文章总数</div>
+            <div class="content-summary-value">{siteStats.articleCount}</div>
+            <div class="content-summary-text">
+              当前最新更新：{latestArticle ? formatDate(latestArticle.entry.data.date) : "暂无"}
+            </div>
+          </div>
+          <div class="content-summary-card">
+            <div class="content-summary-kicker">累计阅读时长</div>
+            <div class="content-summary-value">{siteStats.totalReadMinutes}</div>
+            <div class="content-summary-text">按内容真实字数估算阅读分钟数</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-index-section">
+        {
+          renderedArticles.length > 0 ? (
+            <div class="art-grid">
+              {
+                renderedArticles.map(({ entry, metrics }, index) => {
+                  const { title, description, date, tags, layoutStyle } = entry.data;
+                  const styleClass = layoutStyle ? `ac-${layoutStyle}` : "ac-sm";
+                  const numStr = String(index + 1).padStart(2, "0");
+
+                  return (
+                    <a href={getEntryPath(entry)} class={`ac ${styleClass}`}>
+                      {styleClass !== "ac-sm" && <div class="ac-num">{numStr}</div>}
+                      <div class="ac-meta">
+                        {tags.map((tag) => (
+                          <span class={`tag ${getTagColorClass(tag)}`}>{tag}</span>
+                        ))}
+                        <span>{formatDate(date)}</span>
+                      </div>
+                      <h2 class="ac-title">{title}</h2>
+                      {description && <p class="ac-excerpt">{description}</p>}
+                      <div class="ac-foot">
+                        <span>⌛ {metrics.minutesRead} 分钟阅读</span>
+                        <span>{metrics.characterCount.toLocaleString()} 字</span>
+                      </div>
+                    </a>
+                  );
+                })
+              }
+            </div>
+          ) : (
+            <div class="content-index-empty">还没有发布文章。</div>
+          )
+        }
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

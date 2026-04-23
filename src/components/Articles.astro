@@ -1,35 +1,10 @@
 ---
-import { getCollection, render } from "astro:content";
 import SectionHeader from "./ui/SectionHeader.astro";
+import { getRecentArticles } from "../lib/content-data";
+import { formatDate, getEntryPath, getTagColorClass } from "../lib/content";
 import "../styles/components/articles.css";
 
-const allArticles = await getCollection("articles");
-const sortedArticles = allArticles.sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-const articles = sortedArticles.slice(0, 5);
-
-const articlesWithRender = await Promise.all(
-  articles.map(async (article) => {
-    const { remarkPluginFrontmatter } = await render(article);
-    return { ...article, remarkPluginFrontmatter };
-  }),
-);
-
-const formatDate = (date: Date) => {
-  const yy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-  return `${yy}.${mm}.${dd}`;
-};
-
-const getTagColorClass = (tag: string) => {
-  const t = tag.toLowerCase();
-  if (t.includes("gpu") || t.includes("glsl")) return "gpu";
-  if (t.includes("wasm") || t.includes("rust")) return "wasm";
-  if (t.includes("css") || t.includes("web")) return "web";
-  return "note";
-};
+const articlesWithRender = await getRecentArticles(5);
 ---
 
 <section id="articles">
@@ -42,14 +17,13 @@ const getTagColorClass = (tag: string) => {
     />
     <div class="art-grid rv">
       {
-        articlesWithRender.map((article, index) => {
-          const { title, description, date, tags, layoutStyle } = article.data;
-          const readTime = article.remarkPluginFrontmatter?.minutesRead;
+        articlesWithRender.map(({ entry, metrics }, index) => {
+          const { title, description, date, tags, layoutStyle } = entry.data;
           const numStr = String(index + 1).padStart(2, "0");
           const styleClass = layoutStyle ? `ac-${layoutStyle}` : "ac-sm";
 
           return (
-            <a href={`/articles/${article.id}`} class={`ac ${styleClass}`}>
+            <a href={getEntryPath(entry)} class={`ac ${styleClass}`}>
               {styleClass !== "ac-sm" && <div class="ac-num">{numStr}</div>}
               <div class="ac-meta">
                 {tags &&
@@ -70,10 +44,10 @@ const getTagColorClass = (tag: string) => {
               )}
               <div class="ac-foot">
                 <span>
-                  ⌛ {readTime || 5} 分钟{styleClass === "ac-feat" && "阅读"}
+                  ⌛ {metrics.minutesRead} 分钟{styleClass === "ac-feat" && "阅读"}
                 </span>
                 {styleClass !== "ac-sm" && (
-                  <span>{Math.floor(Math.random() * 2000) + 1000} 次阅读</span>
+                  <span>{metrics.characterCount.toLocaleString()} 字</span>
                 )}
               </div>
             </a>

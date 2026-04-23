@@ -1,8 +1,8 @@
 ---
 const shareActions = [
-  "🔗 复制链接",
-  "🐦 分享到 Twitter",
-  "⭐ 收藏文章",
+  { action: "copy", label: "复制链接" },
+  { action: "twitter", label: "分享到 X" },
+  { action: "bookmark", label: "收藏文章" },
 ];
 ---
 
@@ -10,9 +10,46 @@ const shareActions = [
   <div class="rs-label mono-label">分享文章</div>
   <div class="rs-actions">
     {
-      shareActions.map((label) => (
-        <button class="rs-btn ghost-action">{label}</button>
+      shareActions.map((item) => (
+        <button class="rs-btn ghost-action" data-share-action={item.action}>
+          {item.label}
+        </button>
       ))
     }
   </div>
 </aside>
+
+<script>
+  document.querySelectorAll("[data-share-action]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const action = (button as HTMLElement).dataset.shareAction;
+      const url = window.location.href;
+      const title = document.title;
+
+      if (action === "copy") {
+        await navigator.clipboard.writeText(url);
+        button.textContent = "已复制";
+        setTimeout(() => {
+          button.textContent = "复制链接";
+        }, 1600);
+        return;
+      }
+
+      if (action === "twitter") {
+        const shareUrl = new URL("https://twitter.com/intent/tweet");
+        shareUrl.searchParams.set("url", url);
+        shareUrl.searchParams.set("text", title);
+        window.open(shareUrl.toString(), "_blank", "noopener,noreferrer");
+        return;
+      }
+
+      if (action === "bookmark") {
+        await navigator.clipboard.writeText(url);
+        button.textContent = "链接已复制";
+        setTimeout(() => {
+          button.textContent = "收藏文章";
+        }, 1600);
+      }
+    });
+  });
+</script>

@@ -1,0 +1,84 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { getNotes, getSiteStats } from "../../lib/content-data";
+import {
+  formatNoteDate,
+  getEntryPath,
+  getTagColorClass,
+} from "../../lib/content";
+import "../../styles/content-index.css";
+import "../../styles/components/notes.css";
+
+const [notes, siteStats] = await Promise.all([getNotes(), getSiteStats()]);
+---
+
+<Layout title="笔记归档 - VOID.dev">
+  <Navbar activePath="/notes" />
+
+  <main class="content-index-page">
+    <div class="wrap">
+      <section class="content-index-hero rv in">
+        <div>
+          <div class="section-label content-index-label">笔记归档</div>
+          <h1 class="content-index-title">短一点的观察与备忘</h1>
+          <p class="content-index-copy">
+            这里放更轻量的记录：灵感碎片、实现备忘、阅读摘记和阶段复盘。
+            它们不一定完整，但会尽量保持可检索、可回看。
+          </p>
+        </div>
+
+        <div class="content-index-summary">
+          <div class="content-summary-card">
+            <div class="content-summary-kicker">笔记总数</div>
+            <div class="content-summary-value">{siteStats.noteCount}</div>
+            <div class="content-summary-text">持续沉淀日常开发和学习过程</div>
+          </div>
+          <div class="content-summary-card">
+            <div class="content-summary-kicker">写作天数</div>
+            <div class="content-summary-value">{siteStats.writingDays}</div>
+            <div class="content-summary-text">按第一篇内容发布时间计算</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-index-section">
+        {
+          notes.length > 0 ? (
+            <div class="note-list">
+              {
+                notes.map((note, index) => {
+                  const dt = formatNoteDate(note.data.date);
+
+                  return (
+                    <a
+                      href={getEntryPath(note)}
+                      class={`ni rv in ${index > 0 ? `d${Math.min(index, 3)}` : ""}`}
+                    >
+                      <div class="ni-date">
+                        {dt.y}
+                        <br />
+                        {dt.md}
+                      </div>
+                      <div class="ni-title">{note.data.title}</div>
+                      <div class="ni-tags">
+                        {note.data.tags.map((tag) => (
+                          <span class={`tag ${getTagColorClass(tag)}`}>{tag}</span>
+                        ))}
+                      </div>
+                    </a>
+                  );
+                })
+              }
+            </div>
+          ) : (
+            <div class="content-index-empty">还没有发布笔记。</div>
+          )
+        }
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

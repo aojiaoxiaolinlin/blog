@@ -10,19 +10,19 @@ const contactLinks = [
     handle: "void@dev.io",
   },
   {
-    href: "#",
+    href: "",
     icon: "⬡",
     platform: "GitHub",
     handle: "github.com/void-dev",
   },
   {
-    href: "#",
+    href: "",
     icon: "𝕏",
     platform: "Twitter / X",
     handle: "@void_graphics",
   },
   {
-    href: "#",
+    href: "",
     icon: "💬",
     platform: "微信公众号",
     handle: "VOID_dev",
@@ -44,19 +44,30 @@ const contactLinks = [
         </p>
         <div class="contact-links">
           {
-            contactLinks.map((item) => (
-              <a
-                href={item.href}
-                class="cl-item panel-card panel-card--interactive"
-              >
-                <span class="cl-icon">{item.icon}</span>
-                <div class="cl-info">
-                  <div class="cl-platform mono-label">{item.platform}</div>
-                  <div class="cl-handle">{item.handle}</div>
+            contactLinks.map((item) =>
+              item.href ? (
+                <a
+                  href={item.href}
+                  class="cl-item panel-card panel-card--interactive"
+                >
+                  <span class="cl-icon">{item.icon}</span>
+                  <div class="cl-info">
+                    <div class="cl-platform mono-label">{item.platform}</div>
+                    <div class="cl-handle">{item.handle}</div>
+                  </div>
+                  <span class="cl-arrow">→</span>
+                </a>
+              ) : (
+                <div class="cl-item panel-card">
+                  <span class="cl-icon">{item.icon}</span>
+                  <div class="cl-info">
+                    <div class="cl-platform mono-label">{item.platform}</div>
+                    <div class="cl-handle">{item.handle}</div>
+                  </div>
+                  <span class="cl-arrow">整理中</span>
                 </div>
-                <span class="cl-arrow">→</span>
-              </a>
-            ))
+              ),
+            )
           }
         </div>
       </div>

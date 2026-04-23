@@ -8,25 +8,24 @@ import "../styles/components/lab.css";
     <SectionHeader
       label="交互实验室"
       title="实时运行的实验"
-      href="#"
-      linkText="全部实验"
     />
     <div class="lab-grid rv">
-      <div class="lc panel-card panel-card--interactive">
+      <a href="/lab/triangle" class="lc panel-card panel-card--interactive">
         <div class="lc-vis">
           <canvas id="lc1" width="400" height="200"></canvas><div
             class="lc-overlay"
           >
-          </div><span class="lc-badge status-badge status-badge--mint">LIVE</span>
+          </div><span class="lc-badge status-badge status-badge--accent">NEW</span>
         </div>
         <div class="lc-body">
-          <h3 class="lc-title">粒子流体模拟</h3><p class="lc-desc">
-            基于 WebGPU Compute Shader 的 SPH 流体，实时 50,000 粒子交互。
+          <h3 class="lc-title">Rust + wgpu Triangle</h3><p class="lc-desc">
+            最小可运行渲染实验：通过 `wasm-pack` 将 Rust + wgpu 编译到浏览器，
+            创建 WebGPU pipeline 并绘制一个彩色三角形。
           </p><div class="lc-tech">
-            <span class="meta-chip">WebGPU</span><span class="meta-chip">WGSL</span><span class="meta-chip">Compute</span>
+            <span class="meta-chip">Rust</span><span class="meta-chip">WASM</span><span class="meta-chip">wgpu</span>
           </div>
         </div>
-      </div>
+      </a>
       <div class="lc panel-card panel-card--interactive">
         <div class="lc-vis">
           <canvas id="lc2" width="400" height="200"></canvas><div
@@ -68,44 +67,67 @@ import "../styles/components/lab.css";
     if (!cv) return;
     const ctx = cv.getContext("2d");
     if (!ctx) return;
-    const N = 150,
-      pts = [];
-    for (let i = 0; i < N; i++)
-      pts.push({
-        x: Math.random() * cv.width,
-        y: Math.random() * cv.height,
-        vx: (Math.random() - 0.5) * 0.7,
-        vy: (Math.random() - 0.5) * 0.7,
-        r: Math.random() * 1.8 + 0.4,
-        h: Math.floor(Math.random() * 60 + 230),
-      });
     (function draw() {
-      ctx.fillStyle = "rgba(5,5,13,.18)";
+      const grad = ctx.createLinearGradient(0, 0, cv.width, cv.height);
+      grad.addColorStop(0, "#060611");
+      grad.addColorStop(1, "#0d1024");
+      ctx.fillStyle = grad;
       ctx.fillRect(0, 0, cv.width, cv.height);
-      pts.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > cv.width) p.vx *= -1;
-        if (p.y < 0 || p.y > cv.height) p.vy *= -1;
+      ctx.strokeStyle = "rgba(124,106,245,0.15)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 10; i++) {
+        const y = (cv.height / 10) * i;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsl(${p.h},75%,70%)`;
+        ctx.moveTo(0, y);
+        ctx.lineTo(cv.width, y);
+        ctx.stroke();
+      }
+
+      const t = performance.now() * 0.001;
+      const wobble = Math.sin(t) * 6;
+      const points = [
+        { x: cv.width * 0.5, y: cv.height * 0.24 + wobble, color: "#7c6af5" },
+        { x: cv.width * 0.2 - wobble, y: cv.height * 0.76, color: "#6af5c8" },
+        { x: cv.width * 0.8 + wobble, y: cv.height * 0.76, color: "#f5a26a" },
+      ];
+
+      ctx.save();
+      ctx.shadowBlur = 24;
+      ctx.shadowColor = "rgba(124,106,245,0.35)";
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      ctx.lineTo(points[1].x, points[1].y);
+      ctx.lineTo(points[2].x, points[2].y);
+      ctx.closePath();
+      const fill = ctx.createLinearGradient(
+        points[0].x,
+        points[0].y,
+        points[2].x,
+        points[2].y,
+      );
+      fill.addColorStop(0, "rgba(124,106,245,0.9)");
+      fill.addColorStop(0.5, "rgba(106,245,200,0.86)");
+      fill.addColorStop(1, "rgba(245,162,106,0.9)");
+      ctx.fillStyle = fill;
+      ctx.fill();
+      ctx.restore();
+
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "rgba(255,255,255,0.28)";
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      ctx.lineTo(points[1].x, points[1].y);
+      ctx.lineTo(points[2].x, points[2].y);
+      ctx.closePath();
+      ctx.stroke();
+
+      points.forEach((point) => {
+        ctx.beginPath();
+        ctx.fillStyle = point.color;
+        ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
         ctx.fill();
       });
-      for (let i = 0; i < N; i++)
-        for (let j = i + 1; j < N; j++) {
-          const dx = pts[i].x - pts[j].x,
-            dy = pts[i].y - pts[j].y,
-            d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 55) {
-            ctx.strokeStyle = `rgba(124,106,245,${(1 - d / 55) * 0.4})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(pts[i].x, pts[i].y);
-            ctx.lineTo(pts[j].x, pts[j].y);
-            ctx.stroke();
-          }
-        }
+
       requestAnimationFrame(draw);
     })();
   })();

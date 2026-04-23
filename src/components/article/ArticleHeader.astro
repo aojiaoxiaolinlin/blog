@@ -5,10 +5,11 @@ interface Props {
   date: string;
   lastModified: string;
   minutesRead: number;
+  characterCount: number;
   tags?: string[];
 }
 
-const { title, description, date, lastModified, minutesRead, tags = [] } =
+const { title, description, date, lastModified, minutesRead, characterCount, tags = [] } =
   Astro.props;
 
 const getTagClass = (tag: string) =>
@@ -37,7 +38,7 @@ const getTagClass = (tag: string) =>
       <span class="ah-author-name">void</span>
     </div>
     <div class="ah-divider"></div>
-    <span>3,240 次阅读</span>
+    <span>{characterCount.toLocaleString()} 字</span>
     <div class="ah-divider"></div>
     <span>上次更新: {lastModified}</span>
   </div>

@@ -48,6 +48,10 @@
   display: flex;
 }
 
+.nl-row--single {
+  display: block;
+}
+
 .nl-input {
   flex: 1;
   padding: calc(var(--space-3) + var(--space-1) + var(--space-1-5))
@@ -72,6 +76,9 @@
 }
 
 .nl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: calc(var(--space-3) + var(--space-1) + var(--space-1-5))
     calc(var(--space-6) + var(--space-1-5));
   background: var(--accent);
@@ -83,7 +90,13 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: none;
+  text-decoration: none;
   transition: background 0.2s;
+}
+
+.nl-row--single .nl-btn {
+  width: auto;
+  border-radius: var(--radius-xs);
 }
 
 .nl-btn:hover {

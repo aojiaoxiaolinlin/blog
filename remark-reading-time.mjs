@@ -5,8 +5,10 @@ export function remarkReadingTime() {
     return function (tree, { data }) {
         const textOnPage = toString(tree);
         const readingTime = getReadingTime(textOnPage);
+        const characterCount = textOnPage.replace(/\s+/g, "").length;
         // readingTime.text 会以友好的字符串形式给出阅读时间，例如 "3 min read"。
         // 我们只需分钟数，可以使用 readingTime.minutes
         data.astro.frontmatter.minutesRead = Math.ceil(readingTime.minutes);
+        data.astro.frontmatter.characterCount = characterCount;
     };
 }
