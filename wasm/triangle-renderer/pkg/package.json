@@ -1,0 +1,15 @@
+{
+  "name": "triangle-renderer",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "triangle_renderer_bg.wasm",
+    "triangle_renderer.js",
+    "triangle_renderer.d.ts"
+  ],
+  "main": "triangle_renderer.js",
+  "types": "triangle_renderer.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
