@@ -4,12 +4,12 @@
   "type": "dark",
   "colors": {
     "editor.background": "#070712",
-    "editor.foreground": "#e8e6f0",
-    "editor.lineHighlightBackground": "#FFFFFF0A",
+    "editor.foreground": "#f3efff",
+    "editor.lineHighlightBackground": "#8E7DFF14",
     "editorLineNumber.foreground": "#ffffff26",
-    "editorLineNumber.activeForeground": "#7c6af5b3",
-    "editor.selectionBackground": "#7c6af540",
-    "editorCursor.foreground": "#7c6af5"
+    "editorLineNumber.activeForeground": "#b09cff",
+    "editor.selectionBackground": "#8e7dff40",
+    "editorCursor.foreground": "#8e7dff"
   },
   "tokenColors": [
     {
@@ -33,7 +33,7 @@
         "storage.modifier"
       ],
       "settings": {
-        "foreground": "#b57af5"
+        "foreground": "#d3a6ff"
       }
     },
     {
@@ -45,7 +45,7 @@
         "entity.name.method"
       ],
       "settings": {
-        "foreground": "#7af5c4"
+        "foreground": "#7fffd4"
       }
     },
     {
@@ -59,7 +59,7 @@
         "storage.type.primitive"
       ],
       "settings": {
-        "foreground": "#f5a26a"
+        "foreground": "#ffb07a"
       }
     },
     {
@@ -70,7 +70,7 @@
         "string.template"
       ],
       "settings": {
-        "foreground": "#f5c26a"
+        "foreground": "#ffd86f"
       }
     },
     {
@@ -81,7 +81,7 @@
         "constant.character"
       ],
       "settings": {
-        "foreground": "#f56a9a"
+        "foreground": "#ff8fb1"
       }
     },
     {
@@ -94,7 +94,7 @@
         "keyword.operator"
       ],
       "settings": {
-        "foreground": "#6af5f5"
+        "foreground": "#82dfff"
       }
     },
     {
@@ -106,8 +106,90 @@
         "punctuation.definition.comment"
       ],
       "settings": {
-        "foreground": "#6b6880",
+        "foreground": "#9d97b8",
         "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Variables",
+      "scope": [
+        "variable",
+        "variable.other",
+        "meta.definition.variable.name",
+        "meta.object-literal.key"
+      ],
+      "settings": {
+        "foreground": "#efe9ff"
+      }
+    },
+    {
+      "name": "Parameters",
+      "scope": [
+        "variable.parameter",
+        "meta.parameter"
+      ],
+      "settings": {
+        "foreground": "#9fd8ff"
+      }
+    },
+    {
+      "name": "Properties & Fields",
+      "scope": [
+        "variable.other.property",
+        "meta.property-name",
+        "entity.name.tag.yaml",
+        "support.variable.property"
+      ],
+      "settings": {
+        "foreground": "#c6a8ff"
+      }
+    },
+    {
+      "name": "Constants & Enum Members",
+      "scope": [
+        "constant",
+        "variable.other.constant",
+        "support.constant",
+        "variable.other.enummember"
+      ],
+      "settings": {
+        "foreground": "#ff9dbd"
+      }
+    },
+    {
+      "name": "Namespaces & Modules",
+      "scope": [
+        "entity.name.namespace",
+        "support.namespace",
+        "entity.name.module",
+        "entity.name.scope-resolution"
+      ],
+      "settings": {
+        "foreground": "#94a8ff"
+      }
+    },
+    {
+      "name": "Builtins & Special Variables",
+      "scope": [
+        "support.function.builtin",
+        "support.type.builtin",
+        "variable.language",
+        "constant.language.boolean"
+      ],
+      "settings": {
+        "foreground": "#86f0ff"
+      }
+    },
+    {
+      "name": "String Escapes & Regex",
+      "scope": [
+        "constant.character.escape",
+        "string.regexp",
+        "regexp",
+        "keyword.operator.quantifier.regexp"
+      ],
+      "settings": {
+        "foreground": "#9dffb7"
       }
     },
     {
@@ -118,7 +200,7 @@
         "variable.other"
       ],
       "settings": {
-        "foreground": "#e8e6f0"
+        "foreground": "#efe9ff"
       }
     },
     {
@@ -129,7 +211,7 @@
         "keyword.other.attribute"
       ],
       "settings": {
-        "foreground": "#b57af5"
+        "foreground": "#ff8fd8"
       }
     },
     {
@@ -138,7 +220,7 @@
         "storage.modifier.lifetime.rust"
       ],
       "settings": {
-        "foreground": "#f5a26a"
+        "foreground": "#ffb07a"
       }
     },
     {
@@ -147,7 +229,7 @@
         "entity.name.function.macro.rust"
       ],
       "settings": {
-        "foreground": "#7af5c4"
+        "foreground": "#7fffd4"
       }
     },
     {

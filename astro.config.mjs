@@ -46,8 +46,8 @@ const expressiveCodeOptions = {
 
     // 字体
     codeFontFamily: "'Fira Code', 'JetBrains Mono', monospace",
-    codeFontSize: '0.825rem',
-    codeLineHeight: '1.72',
+    codeFontSize: '1rem',
+    codeLineHeight: '1.82',
     uiFontFamily: "'Fira Code', 'JetBrains Mono', monospace",
 
     // 圆角
@@ -61,13 +61,13 @@ const expressiveCodeOptions = {
 
     frames: {
       // ── Header 背景 ──────────────────────────────
-      editorTabBarBackground: '#111120',
-      terminalTitlebarBackground: '#111120',
+      editorTabBarBackground: '#141426',
+      terminalTitlebarBackground: '#121420',
 
       // ── Active tab（语言标签）────────────────────
       // 背景透明 → 融入 header
-      editorActiveTabBackground: '#070712',
-      editorActiveTabForeground: '#6b6880',
+      editorActiveTabBackground: '#0c0c18',
+      editorActiveTabForeground: '#b3afc9',
 
       // ★ 关键：把 tab 上下指示线都设为透明 → 消除下划线
       editorActiveTabIndicatorTopColor: 'transparent',
@@ -77,14 +77,14 @@ const expressiveCodeOptions = {
       editorActiveTabBorderColor: 'transparent',
 
       // Tab bar 底部分割线
-      editorTabBarBorderBottomColor: 'rgba(255,255,255,0.08)',
+      editorTabBarBorderBottomColor: 'rgba(255,255,255,0.06)',
 
       // 非激活 tab（多 tab 场景）
-      editorTabBarBackground: '#111120',
+      editorTabBarBackground: '#141426',
 
       // ── 终端帧 ───────────────────────────────────
-      terminalTitlebarForeground: '#5e5b72',
-      terminalTitlebarBorderBottomColor: 'rgba(255,255,255,0.08)',
+      terminalTitlebarForeground: '#a39fbb',
+      terminalTitlebarBorderBottomColor: 'rgba(255,255,255,0.06)',
 
       // ★ 终端圆点颜色（expressive-code 通过这三个变量控制）
       terminalTitlebarDotsForeground: '#111120',  // dot 内部色
@@ -93,9 +93,9 @@ const expressiveCodeOptions = {
       // ── 复制按钮 ──────────────────────────────────
       inlineButtonBackground: 'transparent',
       inlineButtonBorder: 'rgba(255,255,255,0.12)',
-      inlineButtonForeground: '#6b6880',
-      inlineButtonHoverBackground: 'rgba(255,255,255,0.06)',
-      inlineButtonHoverForeground: '#e8e6f0',
+      inlineButtonForeground: '#908cab',
+      inlineButtonHoverBackground: 'rgba(124,106,245,0.12)',
+      inlineButtonHoverForeground: '#ffffff',
 
       // 复制成功提示
       tooltipSuccessBackground: 'rgba(106,245,200,0.15)',
@@ -103,17 +103,17 @@ const expressiveCodeOptions = {
 
       // ── 阴影 ──────────────────────────────────────
       frameBoxShadowCssValue:
-        '0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08)',
+        '0 14px 36px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05)',
     },
 
     // ── 行号 ──────────────────────────────────────
     // 注意：需在 MDX 里用 showLineNumbers 或全局开启
-    codeLineNumbersForeground: 'rgba(255,255,255,0.16)',
-    codeLineNumbersBorderColor: 'rgba(255,255,255,0.06)',
+    codeLineNumbersForeground: 'rgba(255,255,255,0.24)',
+    codeLineNumbersBorderColor: 'rgba(255,255,255,0.05)',
 
     // ── 标记高亮行 ────────────────────────────────
-    codeHighlightLineBgColor: 'rgba(255,255,255,0.04)',
-    codeHighlightLineMarkerColor: 'rgba(124,106,245,0.65)',
+    codeHighlightLineBgColor: 'rgba(124,106,245,0.08)',
+    codeHighlightLineMarkerColor: 'rgba(124,106,245,0.5)',
 
     // ── diff ──────────────────────────────────────
     insDiffIndicatorColor: '#6af5c8',

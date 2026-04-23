@@ -11,12 +11,20 @@
   counter-reset: h2-counter;
 }
 
+.article-main .prose {
+  font-size: 1.14rem;
+  line-height: 1.94;
+  max-width: 58rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .prose p { margin-bottom: 1.45em; }  /* 段间距收紧，避免松散 */
 .prose p:last-child { margin-bottom: 0; }
 
 .prose h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.7rem; font-weight: 700; letter-spacing: -.035em;
+  font-size: 1.9rem; font-weight: 700; letter-spacing: -.035em;
   color: var(--text-primary);  /* 最亮白，h2标题最醒目 */
   line-height: 1.2;
   margin: 3.2em 0 1.1em;
@@ -35,7 +43,7 @@
 
 .prose h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.18rem; font-weight: 700; letter-spacing: -.02em;
+  font-size: 1.32rem; font-weight: 700; letter-spacing: -.02em;
   color: var(--text-primary);
   line-height: 1.35;
   margin: 2.4em 0 .75em;
@@ -44,12 +52,36 @@
   position: relative;
 }
 
+.prose h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.34rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--accent3) 84%, white 16%);
+  margin: 2.5em 0 0.9em;
+  position: relative;
+  display: inline-block;
+}
+
+.prose h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.22em;
+  width: 100%;
+  height: 1px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--accent3) 80%, white 20%), transparent 82%);
+  opacity: 0.8;
+}
+
 /* 让 h1 - h6 默认相对定位，并提供 hover 展现锚点的图标 */
 .prose h2, .prose h3, .prose h4 {
   position: relative;
 }
 
-.prose h2 a, .prose h3 a {
+.prose h2 a, .prose h3 a, .prose h4 a {
   text-decoration: none;
   color: inherit;
 }
@@ -61,11 +93,11 @@
 .prose em { font-style: italic; color: var(--accent2); }
 
 .prose code {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
   font-size: .83em; letter-spacing: -.01em;
-  color: var(--accent3);
-  background: rgba(106,245,200,.08);
-  border: var(--line-hair) solid rgba(106,245,200,.15);
+  color: #cbb6ff;
+  background: rgba(124,106,245,.12);
+  border: var(--line-hair) solid rgba(124,106,245,.22);
   border-radius: var(--radius-xs); padding: var(--space-1) var(--space-1-5);
 }
 
@@ -83,7 +115,7 @@
   border: none !important;
   padding: 0 !important;
   color: inherit !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Fira Code', 'JetBrains Mono', monospace !important;
   font-size: inherit !important;
 }
 
@@ -143,7 +175,7 @@
 .code-copy:hover { transform: none; }
 .code-body {
   padding: var(--space-5); overflow-x: auto; line-height: 1.7;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
 }
 .code-body::-webkit-scrollbar { height: var(--size-scrollbar-thin); }
 .code-body::-webkit-scrollbar-track { background: transparent; }
@@ -160,7 +192,7 @@
 }
 .callout.info {
   background: rgba(124,106,245,.08);
-  border: var(--line-hair) solid rgba(124,106,245,.2);
+  border: var(--line-hair) solid rgba(124,106,245,.24);
   border-left: var(--line-ui) solid var(--accent);
 }
 .callout.warning {
@@ -170,7 +202,7 @@
 }
 .callout.tip {
   background: rgba(106,245,200,.07);
-  border: var(--line-hair) solid rgba(106,245,200,.18);
+  border: var(--line-hair) solid rgba(106,245,200,.22);
   border-left: var(--line-ui) solid var(--accent3);
 }
 .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: var(--space-1); }
@@ -182,6 +214,8 @@
 .callout.info .callout-title { color: var(--accent); }
 .callout.warning .callout-title { color: var(--accent2); }
 .callout.tip .callout-title { color: var(--accent3); }
+.callout.info p { color: color-mix(in srgb, var(--text) 92%, white 8%); }
+.callout.tip p { color: color-mix(in srgb, var(--text) 90%, var(--accent3) 10%); }
 
 /* ── Pull quote ── */
 .pull-quote {
@@ -290,9 +324,16 @@
   display: block; text-align: center; width: 100%;
 }
 .prose a {
-  color: var(--accent3); text-decoration: none; border-bottom: var(--line-hair) dashed rgba(106,245,200,.4); transition: border-color .2s;
+  color: #79e8d9;
+  text-decoration: none;
+  border-bottom: var(--line-hair) dashed rgba(121,232,217,.42);
+  transition: color .2s, border-color .2s;
 }
-.prose a:hover { border-bottom-style: solid; border-bottom-color: var(--accent3); }
+.prose a:hover {
+  color: #a6fff4;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(166,255,244,.72);
+}
 /* ==========================================================
    code-blocks.css — 基于真实 DOM 结构精确覆盖
    
@@ -315,10 +356,60 @@
 
 /* ─── 0. 间距 ─────────────────────────────────────────── */
 .expressive-code {
-  margin: 2em 0 2.4em;
+  margin: 2.5rem -1rem 3rem;
+}
+
+.expressive-code .frame {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.expressive-code .frame pre {
+  overflow-x: auto;
+}
+
+.expressive-code .ec-line {
+  min-height: 1.8em;
+}
+
+.expressive-code .ec-line .gutter {
+  padding-inline: 0.2rem 0.55rem;
+}
+
+.expressive-code .ec-line .ln {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.expressive-code .ec-line .code {
+  padding-right: 1rem;
+}
+
+.expressive-code .ec-line:hover .code {
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.expressive-code .ec-line.highlight,
+.expressive-code .ec-line.mark {
+  background: linear-gradient(90deg, rgba(124, 106, 245, 0.08), transparent 75%);
+}
+
+.expressive-code .frame .title {
+  letter-spacing: 0.12em;
 }
 
 @media (max-width: 1024px) {
+  .article-main .prose {
+    font-size: 1.06rem;
+    line-height: 1.9;
+    max-width: 100%;
+  }
+
+  .expressive-code {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .prose h2::before {
     position: static;
     display: block;
@@ -340,9 +431,22 @@
     font-size: var(--text-body);
   }
 
+  .article-main .prose {
+    font-size: 1rem;
+    line-height: 1.88;
+  }
+
   .prose h2 {
     margin: 2.6em 0 1em;
     padding-top: 2.6em;
+  }
+
+  .expressive-code .ec-line .gutter {
+    padding-inline: 0.1rem 0.45rem;
+  }
+
+  .expressive-code .ec-line .code {
+    padding-right: 0.75rem;
   }
 
   .pull-quote {
