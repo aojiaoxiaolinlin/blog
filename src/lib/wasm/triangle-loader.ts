@@ -1,9 +1,7 @@
-interface TriangleModule {
-  default: (input?: URL | RequestInfo) => Promise<unknown>;
-  start: (canvasId: string) => Promise<void>;
-}
+import type * as TriangleRenderer from "../../../wasm/triangle-renderer/pkg/triangle_renderer";
 
-let modulePromise: Promise<TriangleModule> | null = null;
+
+let modulePromise: Promise<typeof TriangleRenderer> | null = null;
 
 interface MountTriangleDemoOptions {
   canvasId: string;

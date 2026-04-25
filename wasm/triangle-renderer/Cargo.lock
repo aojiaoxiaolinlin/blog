@@ -795,7 +795,6 @@ dependencies = [
  "console_error_panic_hook",
  "wasm-bindgen",
  "wasm-bindgen-futures",
- "web-sys",
  "wgpu",
 ]
 

@@ -1,19 +1,18 @@
 use wasm_bindgen::prelude::*;
-use web_sys::HtmlCanvasElement;
+use wgpu::web_sys::HtmlCanvasElement;
 
 #[wasm_bindgen]
 pub async fn start(canvas_id: String) -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
 
-    let window = web_sys::window().ok_or_else(|| js_error("window is unavailable"))?;
+    let window = wgpu::web_sys::window().ok_or_else(|| js_error("window is unavailable"))?;
     let document = window
         .document()
         .ok_or_else(|| js_error("document is unavailable"))?;
-    let canvas = document
+    let canvas: HtmlCanvasElement = document
         .get_element_by_id(&canvas_id)
         .ok_or_else(|| js_error("triangle canvas was not found"))?
-        .dyn_into::<HtmlCanvasElement>()
-        .map_err(|_| js_error("target element is not a canvas"))?;
+        .unchecked_into();
 
     let device_pixel_ratio = window.device_pixel_ratio();
     let width = ((canvas.client_width().max(1) as f64) * device_pixel_ratio).round() as u32;
